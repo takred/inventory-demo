@@ -13,6 +13,18 @@ public class Monster {
     @Id
     private UUID id = UUID.randomUUID();
 
+    public Monster(Monster monster) {
+        name = monster.name;
+        damage = monster.damage;
+        hp = monster.hp;
+        expForWin = monster.expForWin;
+        id = monster.id;
+    }
+
+    public Monster() {
+
+    }
+
     public String getName() {
         return name;
     }

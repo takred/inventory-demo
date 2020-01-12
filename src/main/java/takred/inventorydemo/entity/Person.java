@@ -14,6 +14,17 @@ public class Person {
     @Id
     private UUID id = UUID.randomUUID();
 
+    public Person(Person person) {
+        name = person.name;
+        damage = person.damage;
+        hp = person.hp;
+        lvl = person.lvl;
+        exp = person.exp;
+        id = person.id;
+    }
+    public Person() {
+    }
+
     public String getName() {
         return name;
     }
