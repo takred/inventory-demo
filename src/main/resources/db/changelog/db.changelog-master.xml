@@ -11,5 +11,6 @@
     <include file="add-monster-table.xml" relativeToChangelogFile="true"/>
     <include file="add-battle-table.xml" relativeToChangelogFile="true"/>
     <include file="add-battle-log-table.xml" relativeToChangelogFile="true"/>
+    <include file="add-user-account-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

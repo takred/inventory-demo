@@ -15,6 +15,7 @@ public class Person {
     private Integer exp;
     @Id
     private UUID id = UUID.randomUUID();
+    private UUID userId;
 
     public Person(Person person) {
         name = person.name;
@@ -25,6 +26,7 @@ public class Person {
         expForNextLvl = person.expForNextLvl;
         exp = person.exp;
         id = person.id;
+        userId = person.userId;
     }
     public Person() {
     }
@@ -91,5 +93,13 @@ public class Person {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 }

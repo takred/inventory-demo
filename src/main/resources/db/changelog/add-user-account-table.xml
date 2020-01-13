@@ -5,19 +5,13 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
-    <changeSet id="add-person-table" author="takred">
-        <createTable tableName="person">
+    <changeSet id="add-user-account-table" author="takred">
+        <createTable tableName="user_account">
             <column name="id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="damage" type="integer"/>
-            <column name="hp" type="int"/>
-            <column name="max_hp" type="int"/>
-            <column name="lvl" type="int"/>
-            <column name="exp" type="int"/>
-            <column name="exp_for_next_lvl" type="int"/>
-            <column name="user_id" type="UUID"/>
+            <column name="login" type="varchar(255)"/>
+            <column name="person_id" type="UUID"/>
         </createTable>
     </changeSet>
 
