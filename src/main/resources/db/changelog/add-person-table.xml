@@ -15,6 +15,7 @@
             <column name="hp" type="int"/>
             <column name="lvl" type="int"/>
             <column name="exp" type="int"/>
+            <column name="exp_for_next_lvl" type="int"/>
         </createTable>
     </changeSet>
 

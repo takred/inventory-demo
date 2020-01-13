@@ -43,6 +43,11 @@ public class BattleService {
         while (true) {
             monster.setHp(monster.getHp() - person.getDamage());
             if (monster.getHp() <= 0) {
+                person.setExp(person.getExp() + monster.getExpForWin());
+                if (checkLvlUp(person)) {
+                    lvlUp(person);
+                }
+                personRepository.save(person);
                 battle.setWinner(personId);
                 battleRepository.save(battle);
                 battleLog(battle.getId(), personId, turn,
@@ -75,13 +80,20 @@ public class BattleService {
         battleLog.setBattleId(battleId);
         battleLog.setTurn(turn);
         battleLog.setMessage(message);
-        battleLogRepository.save(battleLog);
     }
 
     private void lvlUp(Person person) {
         person.setDamage(person.getDamage() + 1);
         person.setHp(person.getHp() + 10);
         person.setLvl(person.getLvl() + 1);
+        person.setExpForNextLvl(person.getExpForNextLvl() + 100);
         personRepository.save(person);
+    }
+
+    private boolean checkLvlUp(Person person) {
+        if (person.getExp() >= person.getExpForNextLvl()) {
+            return true;
+        }
+        return false;
     }
 }

@@ -10,6 +10,7 @@ public class Person {
     private Integer damage;
     private Integer hp;
     private Integer lvl;
+    private Integer expForNextLvl;
     private Integer exp;
     @Id
     private UUID id = UUID.randomUUID();
@@ -19,6 +20,7 @@ public class Person {
         damage = person.damage;
         hp = person.hp;
         lvl = person.lvl;
+        expForNextLvl = person.expForNextLvl;
         exp = person.exp;
         id = person.id;
     }
@@ -55,6 +57,14 @@ public class Person {
 
     public void setLvl(Integer lvl) {
         this.lvl = lvl;
+    }
+
+    public Integer getExpForNextLvl() {
+        return expForNextLvl;
+    }
+
+    public void setExpForNextLvl(Integer expForNextLvl) {
+        this.expForNextLvl = expForNextLvl;
     }
 
     public Integer getExp() {
