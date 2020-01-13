@@ -84,7 +84,8 @@ public class BattleService {
 
     private void lvlUp(Person person) {
         person.setDamage(person.getDamage() + 1);
-        person.setHp(person.getHp() + 10);
+        person.setMaxHp(person.getMaxHp() + 10);
+        person.setHp(person.getMaxHp());
         person.setLvl(person.getLvl() + 1);
         person.setExpForNextLvl(person.getExpForNextLvl() + 100);
         personRepository.save(person);

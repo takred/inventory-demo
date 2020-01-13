@@ -9,6 +9,7 @@ public class Person {
     private String name;
     private Integer damage;
     private Integer hp;
+    private Integer maxHp;
     private Integer lvl;
     private Integer expForNextLvl;
     private Integer exp;
@@ -19,6 +20,7 @@ public class Person {
         name = person.name;
         damage = person.damage;
         hp = person.hp;
+        maxHp = person.maxHp;
         lvl = person.lvl;
         expForNextLvl = person.expForNextLvl;
         exp = person.exp;
@@ -49,6 +51,14 @@ public class Person {
 
     public void setHp(Integer hp) {
         this.hp = hp;
+    }
+
+    public Integer getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(Integer maxHp) {
+        this.maxHp = maxHp;
     }
 
     public Integer getLvl() {

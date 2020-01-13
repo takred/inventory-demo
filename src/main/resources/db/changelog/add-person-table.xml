@@ -13,6 +13,7 @@
             <column name="name" type="varchar(255)"/>
             <column name="damage" type="integer"/>
             <column name="hp" type="int"/>
+            <column name="max_hp" type="int"/>
             <column name="lvl" type="int"/>
             <column name="exp" type="int"/>
             <column name="exp_for_next_lvl" type="int"/>
