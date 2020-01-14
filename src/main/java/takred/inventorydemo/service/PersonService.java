@@ -20,10 +20,10 @@ public class PersonService {
 
     public void registerNewPerson(Person person, UUID userId){
         Person person1 = personRepository.findByName(person.getName());
-        if (person1 == null && userAccountRepository.existsById(userId)) {
+        UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
+        if (person1 == null && userAccount != null) {
             person.setUserId(userId);
             personRepository.save(person);
-            UserAccount userAccount = userAccountRepository.findById(userId).get();
             userAccount.setPersonId(person.getId());
             userAccountRepository.save(userAccount);
         }

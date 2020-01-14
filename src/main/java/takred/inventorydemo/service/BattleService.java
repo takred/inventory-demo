@@ -60,6 +60,7 @@ public class BattleService {
                             monster.getName() + " осталось " + monster.getHp() + " здоровья.");
             person.setHp(person.getHp() - monster.getDamage());
             if (person.getHp() <= 0) {
+                personRepository.save(person);
                 battle.setWinner(monsterId);
                 battleRepository.save(battle);
                 battleLog(battle.getId(), personId, turn + 1,

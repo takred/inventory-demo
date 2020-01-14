@@ -1,11 +1,10 @@
 package takred.inventorydemo.web;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.service.UserAccountService;
+
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/")
@@ -19,5 +18,10 @@ public class UserAccountController {
     @PostMapping(value = "register_new_user_account")
     public void registerNewUserAccount(@RequestBody UserAccount userAccount){
         userAccountService.registerNewUserAccount(userAccount);
+    }
+
+    @RequestMapping(value = "resurrection/{userId}")
+    public String resurrection(@PathVariable("userId") UUID userId) {
+        return userAccountService.resurrection(userId);
     }
 }

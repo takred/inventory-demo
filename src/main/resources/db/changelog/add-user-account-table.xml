@@ -12,6 +12,7 @@
             </column>
             <column name="login" type="varchar(255)"/>
             <column name="person_id" type="UUID"/>
+            <column name="gold" type="Integer"/>
         </createTable>
     </changeSet>
 
