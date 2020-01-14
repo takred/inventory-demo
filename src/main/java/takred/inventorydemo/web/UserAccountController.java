@@ -16,8 +16,8 @@ public class UserAccountController {
     }
 
     @PostMapping(value = "register_new_user_account")
-    public void registerNewUserAccount(@RequestBody UserAccount userAccount){
-        userAccountService.registerNewUserAccount(userAccount);
+    public String registerNewUserAccount(@RequestBody UserAccount userAccount){
+        return userAccountService.registerNewUserAccount(userAccount);
     }
 
     @RequestMapping(value = "resurrection/{userId}")

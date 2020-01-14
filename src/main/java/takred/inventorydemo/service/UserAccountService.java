@@ -18,16 +18,18 @@ public class UserAccountService {
         this.personRepository = personRepository;
     }
 
-    public void registerNewUserAccount(UserAccount userAccount){
-        if (!userAccountRepository.existsById(userAccount.getId())) {
+    public String registerNewUserAccount(UserAccount userAccount){
+        if (userAccountRepository.findByLogin(userAccount.getLogin()).orElse(null) == null) {
             userAccountRepository.save(userAccount);
+            return userAccount.getId().toString();
         }
+        return "Пользователь с таким логином уже есть!";
     }
 
     public String resurrection(UUID userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-            return "Аккаунта с таким именем нет!";
+            return "Аккаунта с таким логином нет!";
         }
         Person person = personRepository.findById(userAccount.getPersonId()).orElse(null);
         if (person == null) {

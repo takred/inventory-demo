@@ -13,6 +13,7 @@ import takred.inventorydemo.repository.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -28,7 +29,7 @@ public class ItemInInventoryService {
     }
 
     public List<ItemCombination> getPersonItems(String namePerson) {
-        Person person = personRepository.findByName(namePerson);
+        Person person = personRepository.findByName(namePerson).orElse(null);
         if (person == null) {
             return new ArrayList<>();
         }
@@ -48,7 +49,7 @@ public class ItemInInventoryService {
     }
 
     public String addItemInInventory(AddInInventoryItemParameters parameters) {
-        Person person = personRepository.findByName(parameters.getNamePerson());
+        Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
 
         if (person == null) {
             return "Такого персонажа нет!";
@@ -66,7 +67,7 @@ public class ItemInInventoryService {
     }
 
     public String onItem(ItemOnParameters parameters) {
-        Person person = personRepository.findByName(parameters.getNamePerson());
+        Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
         if (person == null) {
             return "Такого персонажа нет!";
         }
@@ -84,12 +85,12 @@ public class ItemInInventoryService {
                 return "Такого предмета у вас нет!";
             }
         }
-        if (itemInInventory.getItemOn()) {
+        if (itemInInventory.isItemOn()) {
             return "Этот предмет и так надет!";
         }
         Integer sumOn = 0;
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
-            if (allIdItemInPersonInventory.get(i).getItemOn()) {
+            if (allIdItemInPersonInventory.get(i).isItemOn()) {
                 sumOn++;
             }
         }
@@ -102,7 +103,7 @@ public class ItemInInventoryService {
     }
 
     public List<Item> getOnlyOnItem(String namePerson) {
-        Person person = personRepository.findByName(namePerson);
+        Person person = personRepository.findByName(namePerson).orElse(null);
         if (person == null) {
             return new ArrayList<>();
         }
@@ -112,7 +113,7 @@ public class ItemInInventoryService {
         }
         List<Item> allOnItem = new ArrayList<>();
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
-            if (allIdItemInPersonInventory.get(i).getItemOn()) {
+            if (allIdItemInPersonInventory.get(i).isItemOn()) {
                 UUID idItemInCurrentElement = allIdItemInPersonInventory.get(i).getIdItem();
                 allOnItem.add(allItemRepository.findById(idItemInCurrentElement).get());
             }

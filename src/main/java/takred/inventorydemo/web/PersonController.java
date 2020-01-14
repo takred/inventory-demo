@@ -16,9 +16,9 @@ public class PersonController {
     }
 
     @PostMapping(value = "register_new_person/{userId}")
-    public void registerNewPerson(@RequestBody Person person,
+    public String registerNewPerson(@RequestBody Person person,
                                   @PathVariable("userId") UUID userId) {
-        personService.registerNewPerson(person, userId);
+        return personService.registerNewPerson(person, userId);
     }
 
 }
