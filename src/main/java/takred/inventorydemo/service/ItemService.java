@@ -2,7 +2,7 @@ package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.repository.AllItemRepository;
-import takred.inventorydemo.ItemDto;
+import takred.inventorydemo.ItemListDto;
 import takred.inventorydemo.entity.Item;
 
 @Service
@@ -22,9 +22,9 @@ public class ItemService {
         return "Такое название предмета уже есть!";
     }
 
-    public void addItems(ItemDto itemDto) {
-        for (int i = 0; i < itemDto.getParameters().size(); i++) {
-            addItem(itemDto.getParameters().get(i));
+    public void addItems(ItemListDto itemListDto) {
+        for (int i = 0; i < itemListDto.getParameters().size(); i++) {
+            addItem(itemListDto.getParameters().get(i));
         }
     }
 }

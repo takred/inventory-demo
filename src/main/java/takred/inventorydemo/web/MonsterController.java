@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import takred.inventorydemo.MonsterDto;
+import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.service.MonsterService;
 import takred.inventorydemo.entity.Monster;
 
@@ -23,7 +23,7 @@ public class MonsterController {
     }
 
     @PostMapping(value = "add_monsters")
-    public void addMonsters(@RequestBody MonsterDto monsterDto) {
-        monsterService.addMonsters(monsterDto);
+    public void addMonsters(@RequestBody MonsterListDto monsterListDto) {
+        monsterService.addMonsters(monsterListDto);
     }
 }

@@ -1,23 +1,22 @@
-package takred.inventorydemo.entity;
+package takred.inventorydemo.dto;
 
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @Data
-@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Battle {
+public class BattleLogDto {
     private UUID personId;
-    private UUID monsterId;
-    private Integer battleNumber;
-    private UUID winner;
-    @Id
+    private UUID battleId;
+    private String message;
+    private Integer turn;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
 
-    public Battle() {
+    public BattleLogDto() {
     }
 }

@@ -4,16 +4,17 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.AddInInventoryItemParameters;
 import takred.inventorydemo.ItemCombination;
 import takred.inventorydemo.ItemOnParameters;
+import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
+import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.repository.ItemInInventoryRepository;
 import takred.inventorydemo.repository.PersonRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,11 +22,13 @@ public class ItemInInventoryService {
     private final ItemInInventoryRepository itemInInventoryRepository;
     private final AllItemRepository allItemRepository;
     private final PersonRepository personRepository;
+    private final ItemMapper itemMapper;
 
-    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository) {
+    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository, ItemMapper itemMapper) {
         this.itemInInventoryRepository = itemInInventoryRepository;
         this.allItemRepository = allItemRepository;
         this.personRepository = personRepository;
+        this.itemMapper = itemMapper;
     }
 
     public List<ItemCombination> getPersonItems(String namePerson) {
@@ -102,7 +105,7 @@ public class ItemInInventoryService {
         return "Успешно надето.";
     }
 
-    public List<Item> getOnlyOnItem(String namePerson) {
+    public List<ItemDto> getOnlyOnItem(String namePerson) {
         Person person = personRepository.findByName(namePerson).orElse(null);
         if (person == null) {
             return new ArrayList<>();
@@ -118,7 +121,12 @@ public class ItemInInventoryService {
                 allOnItem.add(allItemRepository.findById(idItemInCurrentElement).get());
             }
         }
-        return allOnItem;
+
+        List<ItemDto> allOnItemDto = new ArrayList<>();
+        for (int i = 0; i < allOnItem.size(); i++) {
+            allOnItemDto.add(itemMapper.converterInDto(allOnItem.get(i)));
+        }
+        return allOnItemDto;
     }
 
 }

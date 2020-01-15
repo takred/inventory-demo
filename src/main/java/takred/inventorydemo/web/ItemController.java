@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import takred.inventorydemo.ItemDto;
+import takred.inventorydemo.ItemListDto;
 import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.service.ItemService;
 
@@ -23,7 +23,7 @@ public class ItemController {
     }
 
     @PostMapping(value = "add_items")
-    public void addItems(@RequestBody ItemDto itemDto) {
-        itemService.addItems(itemDto);
+    public void addItems(@RequestBody ItemListDto itemListDto) {
+        itemService.addItems(itemListDto);
     }
 }

@@ -18,6 +18,7 @@ public class UserAccountService {
         this.personRepository = personRepository;
     }
 
+
     public String registerNewUserAccount(UserAccount userAccount){
         if (userAccountRepository.findByLogin(userAccount.getLogin()).orElse(null) == null) {
             userAccountRepository.save(userAccount);

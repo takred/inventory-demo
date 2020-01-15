@@ -1,7 +1,7 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
-import takred.inventorydemo.MonsterDto;
+import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.repository.MonsterRepository;
 import takred.inventorydemo.entity.Monster;
 
@@ -22,9 +22,9 @@ public class MonsterService {
         return "Такое имя монстра уже есть!";
     }
 
-    public void addMonsters(MonsterDto monsterDto) {
-        for (int i = 0; i <monsterDto.getParameters().size(); i++) {
-            addMonster(monsterDto.getParameters().get(i));
+    public void addMonsters(MonsterListDto monsterListDto) {
+        for (int i = 0; i < monsterListDto.getParameters().size(); i++) {
+            addMonster(monsterListDto.getParameters().get(i));
         }
     }
 }

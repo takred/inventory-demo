@@ -4,7 +4,7 @@ import takred.inventorydemo.entity.Item;
 
 import java.util.List;
 
-public class ItemDto {
+public class ItemListDto {
     private List<Item> parameters;
 
     public List<Item> getParameters() {
