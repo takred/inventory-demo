@@ -21,7 +21,7 @@ public class BattleLogController {
         this.battleLogService = battleLogService;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+//    @CrossOrigin(origins = "http://localhost:4200")
     @RequestMapping(value = "get_short_battle_info/{personId}")
     public List<ShortBattleInfo> getShortBattleInfo(@PathVariable("personId") UUID personId) {
         return battleLogService.getShortBattleInfo(personId);
@@ -31,4 +31,9 @@ public class BattleLogController {
     public List<BattleLogDto> getBattleLog(@PathVariable("battleId") UUID battleId) {
         return battleLogService.getBattleLog(battleId);
     }
+
+//    @RequestMapping(value = "get_battle_log")
+////    public List<BattleLogDto> getBattleLogs(@PathVariable("battleId") UUID battleId) {
+////        return battleLogService.getBattleLog(battleId);
+////    }
 }

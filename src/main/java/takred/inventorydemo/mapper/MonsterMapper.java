@@ -1,8 +1,10 @@
 package takred.inventorydemo.mapper;
 
+import org.springframework.stereotype.Component;
 import takred.inventorydemo.dto.MonsterDto;
 import takred.inventorydemo.entity.Monster;
 
+@Component
 public class MonsterMapper {
     public Monster converterInEntity(MonsterDto dto) {
         Monster entity = new Monster();

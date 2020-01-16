@@ -1,10 +1,13 @@
 package takred.inventorydemo.mapper;
 
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.dto.BattleLogDto;
 import takred.inventorydemo.entity.Battle;
 import takred.inventorydemo.entity.BattleLog;
 
+@Component
 public class BattleLogMapper {
 
     public BattleLog converterInEntity(BattleLogDto dto) {

@@ -1,8 +1,10 @@
 package takred.inventorydemo.mapper;
 
+import org.springframework.stereotype.Component;
 import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.Person;
 
+@Component
 public class PersonMapper {
     public Person converterInEntity(PersonDto dto) {
         Person entity = new Person();

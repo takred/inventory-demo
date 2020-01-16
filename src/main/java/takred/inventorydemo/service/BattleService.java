@@ -81,6 +81,7 @@ public class BattleService {
         battleLog.setBattleId(battleId);
         battleLog.setTurn(turn);
         battleLog.setMessage(message);
+        battleLogRepository.save(battleLog);
     }
 
     private void lvlUp(Person person) {

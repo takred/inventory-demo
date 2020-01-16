@@ -1,8 +1,10 @@
 package takred.inventorydemo.mapper;
 
+import org.springframework.stereotype.Component;
 import takred.inventorydemo.dto.UserAccountDto;
 import takred.inventorydemo.entity.UserAccount;
 
+@Component
 public class UserAccountMapper {
     public UserAccount converterInEntity(UserAccountDto dto) {
         UserAccount entity = new UserAccount();
