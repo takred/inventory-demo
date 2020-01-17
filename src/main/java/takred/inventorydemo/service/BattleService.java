@@ -1,14 +1,8 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
-import takred.inventorydemo.entity.Battle;
-import takred.inventorydemo.entity.BattleLog;
-import takred.inventorydemo.entity.Monster;
-import takred.inventorydemo.entity.Person;
-import takred.inventorydemo.repository.BattleLogRepository;
-import takred.inventorydemo.repository.BattleRepository;
-import takred.inventorydemo.repository.MonsterRepository;
-import takred.inventorydemo.repository.PersonRepository;
+import takred.inventorydemo.entity.*;
+import takred.inventorydemo.repository.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,12 +13,14 @@ public class BattleService {
     private final MonsterRepository monsterRepository;
     private final BattleRepository battleRepository;
     private final BattleLogRepository battleLogRepository;
+    private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
 
-    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository) {
+    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
+        this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
     }
 
     public String battle(UUID personId, UUID monsterId) {
@@ -66,6 +62,7 @@ public class BattleService {
                 battleLog(battle.getId(), personId, turn + 1,
                         monster.getName() + " наносит " + monster.getDamage() + " урона. У " +
                                 person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!");
+                deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(personId, "Персонаж погиб."));
                 return "Победил монстр!";
             }
             battleLog(battle.getId(), personId, turn + 1,
@@ -99,4 +96,11 @@ public class BattleService {
         }
         return false;
     }
+
+//    private void deathLog(UUID personId, String message) {
+//        DeathAndResurrectionLog deathAndResurrectionLog = new DeathAndResurrectionLog();
+//        deathAndResurrectionLog.setMessage(message);
+//        deathAndResurrectionLog.setPersonId(personId);
+//        deathAndResurrectionLogRepository.save(deathAndResurrectionLog);
+//    }
 }

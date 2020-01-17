@@ -1,8 +1,10 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
+import takred.inventorydemo.entity.DeathAndResurrectionLog;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.entity.UserAccount;
+import takred.inventorydemo.repository.DeathAndResurrectionLogRepository;
 import takred.inventorydemo.repository.PersonRepository;
 import takred.inventorydemo.repository.UserAccountRepository;
 
@@ -12,10 +14,12 @@ import java.util.UUID;
 public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
     private final PersonRepository personRepository;
+    private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
 
-    public UserAccountService(UserAccountRepository userAccountRepository, PersonRepository personRepository) {
+    public UserAccountService(UserAccountRepository userAccountRepository, PersonRepository personRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository) {
         this.userAccountRepository = userAccountRepository;
         this.personRepository = personRepository;
+        this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
     }
 
 
@@ -46,6 +50,7 @@ public class UserAccountService {
         userAccount.setGold(userAccount.getGold() - 500);
         personRepository.save(person);
         userAccountRepository.save(userAccount);
+        deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(person.getId(), "Персонаж воскрешон."));
         return "Персонаж успешно воскрешён!";
     }
 
