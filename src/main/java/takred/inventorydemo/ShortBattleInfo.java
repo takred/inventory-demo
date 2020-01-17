@@ -1,7 +1,10 @@
 package takred.inventorydemo;
 
+import lombok.Data;
+
 import java.util.UUID;
 
+@Data
 public class ShortBattleInfo {
     private UUID battleId;
     private String info;
@@ -14,11 +17,11 @@ public class ShortBattleInfo {
         this.battleId = battleId;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
+//    public String getInfo() {
+//        return info;
+//    }
+//
+//    public void setInfo(String info) {
+//        this.info = info;
+//    }
 }
