@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import java.util.UUID;
 
 @Data
-@Entity
+//@Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DeathAndResurrectionLog {
     private UUID personId;

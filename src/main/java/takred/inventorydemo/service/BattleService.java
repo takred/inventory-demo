@@ -13,14 +13,16 @@ public class BattleService {
     private final MonsterRepository monsterRepository;
     private final BattleRepository battleRepository;
     private final BattleLogRepository battleLogRepository;
-    private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
+//    private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
 
-    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository) {
+    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository
+//            , DeathAndResurrectionLogRepository deathAndResurrectionLogRepository
+    ) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
-        this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
+//        this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
     }
 
     public String battle(UUID personId, UUID monsterId) {
@@ -62,7 +64,7 @@ public class BattleService {
                 battleLog(battle.getId(), personId, turn + 1,
                         monster.getName() + " наносит " + monster.getDamage() + " урона. У " +
                                 person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!");
-                deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(personId, "Персонаж погиб."));
+//                deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(personId, "Персонаж погиб."));
                 return "Победил монстр!";
             }
             battleLog(battle.getId(), personId, turn + 1,

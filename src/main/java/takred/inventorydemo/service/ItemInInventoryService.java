@@ -9,6 +9,7 @@ import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.mapper.ItemMapper;
+import takred.inventorydemo.mapper.ItemMapperMapstruct;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.repository.ItemInInventoryRepository;
 import takred.inventorydemo.repository.PersonRepository;
@@ -23,12 +24,14 @@ public class ItemInInventoryService {
     private final AllItemRepository allItemRepository;
     private final PersonRepository personRepository;
     private final ItemMapper itemMapper;
+    private final ItemMapperMapstruct itemMapperMapstruct;
 
-    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository, ItemMapper itemMapper) {
+    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository, ItemMapper itemMapper, ItemMapperMapstruct itemMapperMapstruct) {
         this.itemInInventoryRepository = itemInInventoryRepository;
         this.allItemRepository = allItemRepository;
         this.personRepository = personRepository;
         this.itemMapper = itemMapper;
+        this.itemMapperMapstruct = itemMapperMapstruct;
     }
 
     public List<ItemCombination> getPersonItems(String namePerson) {
@@ -44,7 +47,8 @@ public class ItemInInventoryService {
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
             UUID idItemInCurrentElement = allIdItemInPersonInventory.get(i).getIdItem();
             UUID idObject = allIdItemInPersonInventory.get(i).getId();
-            ItemCombination itemCombination = new ItemCombination(allItemRepository.findById(idItemInCurrentElement).get(), idObject);
+            ItemCombination itemCombination = itemMapperMapstruct.map(allItemRepository.findById(idItemInCurrentElement).get(), idObject);
+//                    new ItemCombination(allItemRepository.findById(idItemInCurrentElement).get(), idObject);
 //            allItemInPersonInventory.add(allItemRepository.findById(idItemInCurrentElement).get());
             allItemInPersonInventory.add(itemCombination);
         }
@@ -124,7 +128,7 @@ public class ItemInInventoryService {
 
         List<ItemDto> allOnItemDto = new ArrayList<>();
         for (int i = 0; i < allOnItem.size(); i++) {
-            allOnItemDto.add(itemMapper.converterInDto(allOnItem.get(i)));
+            allOnItemDto.add(itemMapperMapstruct.map(allOnItem.get(i)));
         }
         return allOnItemDto;
     }

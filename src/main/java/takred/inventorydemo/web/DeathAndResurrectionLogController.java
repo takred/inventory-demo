@@ -1,4 +1,4 @@
 package takred.inventorydemo.web;
 
-public class DeathAndResurrectionLogController {
+public class DeathAndResurrectionLogController  {
 }

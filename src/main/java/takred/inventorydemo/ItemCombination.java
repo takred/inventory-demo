@@ -19,6 +19,8 @@ public class ItemCombination {
         this.itemId = itemId;
     }
 
+    public ItemCombination() {}
+
     public String getName() {
         return name;
     }
@@ -45,6 +47,10 @@ public class ItemCombination {
 
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public UUID getItemId() {
