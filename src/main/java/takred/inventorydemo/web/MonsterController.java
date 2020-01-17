@@ -31,7 +31,7 @@ public class MonsterController {
     }
 
     @PostMapping(value = "get_all_monster")
-    public List<MonsterDto> getAllMonster() {
-        return monsterService.getAllMonster();
+    public List<MonsterDto> getAllMonsters() {
+        return monsterService.getAllMonsters();
     }
 }

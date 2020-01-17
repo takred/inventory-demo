@@ -4,9 +4,11 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
 import takred.inventorydemo.mapper.MonsterMapper;
+import takred.inventorydemo.mapper.MonsterMapperMapstruct;
 import takred.inventorydemo.repository.MonsterRepository;
 import takred.inventorydemo.entity.Monster;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +16,40 @@ import java.util.List;
 public class MonsterService {
     private final MonsterRepository monsterRepository;
     private final MonsterMapper monsterMapper;
+    private final MonsterMapperMapstruct monsterMapperMapstruct;
 
-    public MonsterService(MonsterRepository monsterRepository, MonsterMapper monsterMapper) {
+    public MonsterService(MonsterRepository monsterRepository, MonsterMapper monsterMapper, MonsterMapperMapstruct monsterMapperMapstruct) {
         this.monsterRepository = monsterRepository;
         this.monsterMapper = monsterMapper;
+        this.monsterMapperMapstruct = monsterMapperMapstruct;
+    }
+
+    @PostConstruct
+    public void createMonstersIfNotExists() {
+        Monster bear = new Monster();
+        bear.setName("Медведь");
+        bear.setExpForWin(15);
+        bear.setDamage(10);
+        bear.setHp(150);
+        Monster rat = new Monster();
+        rat.setName("Крыса");
+        rat.setExpForWin(2);
+        rat.setDamage(1);
+        rat.setHp(10);
+        Monster wolf = new Monster();
+        wolf.setName("Волк");
+        wolf.setExpForWin(10);
+        wolf.setDamage(1);
+        wolf.setHp(100);
+        if (monsterRepository.findByName(bear.getName()) == null) {
+            monsterRepository.save(bear);
+        }
+        if (monsterRepository.findByName(rat.getName()) == null) {
+            monsterRepository.save(rat);
+        }
+        if (monsterRepository.findByName(wolf.getName()) == null) {
+            monsterRepository.save(wolf);
+        }
     }
 
     public String addMonster(Monster monster) {
@@ -35,12 +67,12 @@ public class MonsterService {
         }
     }
 
-    public List<MonsterDto> getAllMonster() {
+    public List<MonsterDto> getAllMonsters() {
         List<Monster> allMonster = monsterRepository.findAll();
         List<MonsterDto> allMonsterDto = new ArrayList<>();
         if (allMonster.size() > 0) {
             for (int i = 0; i < allMonster.size(); i++) {
-                allMonsterDto.add(monsterMapper.converterInDto(allMonster.get(i)));
+                allMonsterDto.add(monsterMapperMapstruct.map(allMonster.get(i)));
             }
         }
         return allMonsterDto;
