@@ -11,6 +11,7 @@ import takred.inventorydemo.entity.Monster;
 import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class MonsterService {
@@ -76,5 +77,13 @@ public class MonsterService {
             }
         }
         return allMonsterDto;
+    }
+
+    public MonsterDto getMonsterById(UUID id) {
+        Monster monster = monsterRepository.findById(id).orElse(null);
+        if (monster == null) {
+            return null;
+        }
+        return monsterMapperMapstruct.map(monster);
     }
 }

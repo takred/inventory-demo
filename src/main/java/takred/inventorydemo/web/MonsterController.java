@@ -1,15 +1,13 @@
 package takred.inventorydemo.web;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
 import takred.inventorydemo.service.MonsterService;
 import takred.inventorydemo.entity.Monster;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/")
@@ -30,8 +28,13 @@ public class MonsterController {
         monsterService.addMonsters(monsterListDto);
     }
 
-    @PostMapping(value = "get_all_monster")
+    @GetMapping(value = "get_all_monsters")
     public List<MonsterDto> getAllMonsters() {
         return monsterService.getAllMonsters();
+    }
+
+    @GetMapping(value = "get_monster_by_id/{id}")
+    public MonsterDto getMonsterById(@PathVariable("id") UUID id) {
+        return monsterService.getMonsterById(id);
     }
 }

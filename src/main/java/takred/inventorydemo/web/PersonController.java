@@ -1,9 +1,11 @@
 package takred.inventorydemo.web;
 
 import org.springframework.web.bind.annotation.*;
+import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.service.PersonService;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,4 +23,13 @@ public class PersonController {
         return personService.registerNewPerson(person, userId);
     }
 
+    @GetMapping(value = "get_all_persons")
+    public List<PersonDto> getAllPersons() {
+        return personService.getAllPersons();
+    }
+
+    @GetMapping(value = "get_person_by_id/{id}")
+    public PersonDto getPersonById(@PathVariable("id") UUID id) {
+        return personService.getPersonById(id);
+    }
 }
