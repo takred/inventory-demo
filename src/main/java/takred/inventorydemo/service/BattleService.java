@@ -1,9 +1,12 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
+import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.entity.*;
+import takred.inventorydemo.mapper.BattleMapperMapstruct;
 import takred.inventorydemo.repository.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,21 +18,27 @@ public class BattleService {
     private final BattleRepository battleRepository;
     private final BattleLogRepository battleLogRepository;
     private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
+//    private final BattleMapperMapstruct battleMapperMapstruct;
 
     public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository
+//            , BattleMapperMapstruct battleMapperMapstruct
     ) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
         this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
+//        this.battleMapperMapstruct = battleMapperMapstruct;
     }
 
-    public String battle(UUID personId, UUID monsterId) {
+    public BattleDto battle(UUID personId, UUID monsterId) {
         Monster monster = new Monster(monsterRepository.findById(monsterId).get());
         Person person = new Person(personRepository.findById(personId).get());
         List<Battle> allBattlesPerson = battleRepository.findByPersonId(personId);
+        String message;
         Battle battle = new Battle();
+        BattleDto battleDto = new BattleDto();
+        List<String> battleLog = new ArrayList<>();
         battle.setPersonId(person.getId());
         battle.setMonsterId(monsterId);
         if (allBattlesPerson == null) {
@@ -46,32 +55,39 @@ public class BattleService {
                 if (checkLvlUp(person)) {
                     lvlUp(person);
                 }
+                message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
+                        monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!";
                 personRepository.save(person);
                 battle.setWinner(personId);
                 battleRepository.save(battle);
-                battleLog(battle.getId(), personId, turn,
-                        person.getName() + " наносит " + currentDamagePerson + " урона. У " +
-                                monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!");
-                return "Победил герой!";
+                battleLog(battle.getId(), personId, turn, message);
+                battleLog.add(message);
+                battleDto = battleDto(battle.getId(), personId, monsterId, monster.getName(),
+                        battle.getBattleNumber(), battle.getWinner(), battleLog);
+                return battleDto;
             }
-            battleLog(battle.getId(), personId, turn,
-                    person.getName() + " наносит " + currentDamagePerson + " урона. У " +
-                            monster.getName() + " осталось " + monster.getHp() + " здоровья.");
+            message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
+                    monster.getName() + " осталось " + monster.getHp() + " здоровья.";
+            battleLog(battle.getId(), personId, turn, message);
+            battleLog.add(message);
             Integer currentDamageMonster = currentDamage(monster.getMinDamage(), monster.getMaxDamage());
             person.setHp(person.getHp() - currentDamageMonster);
             if (person.getHp() <= 0) {
                 personRepository.save(person);
                 battle.setWinner(monsterId);
                 battleRepository.save(battle);
-                battleLog(battle.getId(), personId, turn + 1,
-                        monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
-                                person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!");
-                deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(personId, "Персонаж погиб."));
-                return "Победил монстр!";
+                message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
+                        person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!";
+                battleLog.add(message);
+                battleLog(battle.getId(), personId, turn + 1, message);
+                battleDto = battleDto(battle.getId(), personId, monsterId, monster.getName(),
+                        battle.getBattleNumber(), battle.getWinner(), battleLog);
+                return battleDto;
             }
-            battleLog(battle.getId(), personId, turn + 1,
-                    monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
-                            person.getName() + " осталось " + person.getHp() + " здоровья.");
+            message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
+                    person.getName() + " осталось " + person.getHp() + " здоровья.";
+            battleLog(battle.getId(), personId, turn + 1, message);
+            battleLog.add(message);
             turn = turn + 2;
         }
     }
@@ -83,6 +99,19 @@ public class BattleService {
         battleLog.setTurn(turn);
         battleLog.setMessage(message);
         battleLogRepository.save(battleLog);
+    }
+
+    private BattleDto battleDto(UUID id, UUID peronId, UUID monsterId, String monsterName,
+                                Integer battleNumber, UUID winner, List<String> battleLog) {
+        BattleDto battleDto = new BattleDto();
+        battleDto.setId(id);
+        battleDto.setPersonId(peronId);
+        battleDto.setMonsterId(monsterId);
+        battleDto.setMonsterName(monsterName);
+        battleDto.setBattleNumber(battleNumber);
+        battleDto.setWinner(winner);
+        battleDto.setBattleLog(battleLog);
+        return battleDto;
     }
 
     private void lvlUp(Person person) {
