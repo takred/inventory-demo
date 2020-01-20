@@ -3,15 +3,14 @@ package takred.inventorydemo.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PersonDto {
     private String name;
-    private Integer damage;
+    private Integer minDamage;
+    private Integer maxDamage;
     private Integer hp;
     private Integer maxHp;
     private Integer lvl;
@@ -23,7 +22,8 @@ public class PersonDto {
 
     public PersonDto(PersonDto person) {
         name = person.name;
-        damage = person.damage;
+        minDamage = person.minDamage;
+        maxDamage = person.maxDamage;
         hp = person.hp;
         maxHp = person.maxHp;
         lvl = person.lvl;

@@ -12,7 +12,8 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Monster {
     private String name;
-    private Integer damage;
+    private Integer minDamage;
+    private Integer maxDamage;
     private Integer hp;
     private Integer expForWin;
     @Id
@@ -21,7 +22,8 @@ public class Monster {
 
     public Monster(Monster monster) {
         name = monster.name;
-        damage = monster.damage;
+        minDamage = monster.minDamage;
+        maxDamage = monster.maxDamage;
         hp = monster.hp;
         expForWin = monster.expForWin;
         id = monster.id;

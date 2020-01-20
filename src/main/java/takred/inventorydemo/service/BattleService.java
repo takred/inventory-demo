@@ -6,6 +6,7 @@ import takred.inventorydemo.repository.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BattleService {
@@ -38,7 +39,8 @@ public class BattleService {
         }
         Integer turn = 1;
         while (true) {
-            monster.setHp(monster.getHp() - person.getDamage());
+            Integer currentDamagePerson = currentDamage(person.getMinDamage(), person.getMaxDamage());
+            monster.setHp(monster.getHp() - currentDamagePerson);
             if (monster.getHp() <= 0) {
                 person.setExp(person.getExp() + monster.getExpForWin());
                 if (checkLvlUp(person)) {
@@ -48,26 +50,27 @@ public class BattleService {
                 battle.setWinner(personId);
                 battleRepository.save(battle);
                 battleLog(battle.getId(), personId, turn,
-                        person.getName() + " наносит " + person.getDamage() + " урона. У " +
+                        person.getName() + " наносит " + currentDamagePerson + " урона. У " +
                                 monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!");
                 return "Победил герой!";
             }
             battleLog(battle.getId(), personId, turn,
-                    person.getName() + " наносит " + person.getDamage() + " урона. У " +
+                    person.getName() + " наносит " + currentDamagePerson + " урона. У " +
                             monster.getName() + " осталось " + monster.getHp() + " здоровья.");
-            person.setHp(person.getHp() - monster.getDamage());
+            Integer currentDamageMonster = currentDamage(monster.getMinDamage(), monster.getMaxDamage());
+            person.setHp(person.getHp() - currentDamageMonster);
             if (person.getHp() <= 0) {
                 personRepository.save(person);
                 battle.setWinner(monsterId);
                 battleRepository.save(battle);
                 battleLog(battle.getId(), personId, turn + 1,
-                        monster.getName() + " наносит " + monster.getDamage() + " урона. У " +
+                        monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
                                 person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!");
                 deathAndResurrectionLogRepository.save(new DeathAndResurrectionLog(personId, "Персонаж погиб."));
                 return "Победил монстр!";
             }
             battleLog(battle.getId(), personId, turn + 1,
-                    monster.getName() + " наносит " + monster.getDamage() + " урона. У " +
+                    monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
                             person.getName() + " осталось " + person.getHp() + " здоровья.");
             turn = turn + 2;
         }
@@ -83,7 +86,7 @@ public class BattleService {
     }
 
     private void lvlUp(Person person) {
-        person.setDamage(person.getDamage() + 1);
+        person.setMaxDamage(person.getMaxDamage() + 1);
         person.setMaxHp(person.getMaxHp() + 10);
         person.setHp(person.getMaxHp());
         person.setLvl(person.getLvl() + 1);
@@ -96,6 +99,15 @@ public class BattleService {
             return true;
         }
         return false;
+    }
+
+    private Integer currentDamage(Integer minDamage, Integer maxDamage) {
+        if (minDamage < maxDamage) {
+            return ThreadLocalRandom.current().nextInt(minDamage, maxDamage);
+        } else if (maxDamage < minDamage) {
+            return ThreadLocalRandom.current().nextInt(maxDamage, minDamage);
+        }
+        return minDamage;
     }
 
 //    private void deathLog(UUID personId, String message) {

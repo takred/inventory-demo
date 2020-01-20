@@ -14,7 +14,7 @@ public class PersonMapper {
         entity.setExpForNextLvl(dto.getExpForNextLvl());
         entity.setExp(dto.getExp());
         entity.setLvl(dto.getLvl());
-        entity.setDamage(dto.getDamage());
+        entity.setMaxDamage(dto.getMinDamage());
         entity.setName(dto.getName());
         entity.setId(dto.getId());
         return entity;
@@ -28,7 +28,7 @@ public class PersonMapper {
         dto.setExpForNextLvl(entity.getExpForNextLvl());
         dto.setExp(entity.getExp());
         dto.setLvl(entity.getLvl());
-        dto.setDamage(entity.getDamage());
+        dto.setMinDamage(entity.getMaxDamage());
         dto.setName(entity.getName());
         dto.setId(entity.getId());
         return dto;

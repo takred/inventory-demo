@@ -11,7 +11,8 @@
                 <constraints primaryKey="true"/>
             </column>
             <column name="name" type="varchar(255)"/>
-            <column name="damage" type="integer"/>
+            <column name="min_damage" type="integer"/>
+            <column name="max_damage" type="integer"/>
             <column name="hp" type="int"/>
             <column name="max_hp" type="int"/>
             <column name="lvl" type="int"/>

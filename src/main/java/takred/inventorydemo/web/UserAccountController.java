@@ -1,6 +1,8 @@
 package takred.inventorydemo.web;
 
 import org.springframework.web.bind.annotation.*;
+import takred.inventorydemo.RegisterUserDto;
+import takred.inventorydemo.dto.UserAccountDto;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.service.UserAccountService;
 
@@ -16,8 +18,8 @@ public class UserAccountController {
     }
 
     @PostMapping(value = "register_new_user_account")
-    public String registerNewUserAccount(@RequestBody UserAccount userAccount){
-        return userAccountService.registerNewUserAccount(userAccount);
+    public UserAccountDto registerNewUserAccount(@RequestBody RegisterUserDto registerUserDto){
+        return userAccountService.registerNewUserAccount(registerUserDto);
     }
 
     @RequestMapping(value = "resurrection/{userId}")

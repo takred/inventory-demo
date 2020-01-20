@@ -12,7 +12,8 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Person {
     private String name;
-    private Integer damage;
+    private Integer minDamage;
+    private Integer maxDamage;
     private Integer hp;
     private Integer maxHp;
     private Integer lvl;
@@ -25,7 +26,8 @@ public class Person {
 
     public Person(Person person) {
         name = person.name;
-        damage = person.damage;
+        minDamage = person.minDamage;
+        maxDamage = person.maxDamage;
         hp = person.hp;
         maxHp = person.maxHp;
         lvl = person.lvl;

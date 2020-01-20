@@ -30,17 +30,20 @@ public class MonsterService {
         Monster bear = new Monster();
         bear.setName("Медведь");
         bear.setExpForWin(15);
-        bear.setDamage(10);
+        bear.setMinDamage(7);
+        bear.setMaxDamage(13);
         bear.setHp(150);
         Monster rat = new Monster();
         rat.setName("Крыса");
         rat.setExpForWin(2);
-        rat.setDamage(1);
+        rat.setMinDamage(1);
+        rat.setMaxDamage(3);
         rat.setHp(10);
         Monster wolf = new Monster();
         wolf.setName("Волк");
         wolf.setExpForWin(10);
-        wolf.setDamage(1);
+        wolf.setMinDamage(2);
+        wolf.setMaxDamage(8);
         wolf.setHp(100);
         if (monsterRepository.findByName(bear.getName()) == null) {
             monsterRepository.save(bear);

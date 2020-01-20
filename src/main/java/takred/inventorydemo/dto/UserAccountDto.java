@@ -15,4 +15,5 @@ public class UserAccountDto {
     private UUID personId;
     private String login;
     private Integer gold;
+    private String error;
 }

@@ -1,6 +1,8 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
+import takred.inventorydemo.RegisterUserDto;
+import takred.inventorydemo.dto.UserAccountDto;
 import takred.inventorydemo.entity.DeathAndResurrectionLog;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.entity.UserAccount;
@@ -24,12 +26,21 @@ public class UserAccountService {
     }
 
 
-    public String registerNewUserAccount(UserAccount userAccount){
-        if (userAccountRepository.findByLogin(userAccount.getLogin()).orElse(null) == null) {
+    public UserAccountDto registerNewUserAccount(RegisterUserDto registerUserDto){
+        UserAccountDto userAccountDto = new UserAccountDto();
+        userAccountDto.setId(null);
+        if (userAccountRepository.findByLogin(registerUserDto.getLogin()).orElse(null) == null) {
+            UserAccount userAccount = new UserAccount();
+            userAccount.setLogin(userAccountDto.getLogin());
+            userAccount.setGold(userAccountDto.getGold());
             userAccountRepository.save(userAccount);
-            return userAccount.getId().toString();
+            userAccountDto.setLogin(registerUserDto.getLogin());
+            userAccountDto.setGold(1000);
+            userAccountDto.setId(userAccount.getId());
+            return userAccountDto;
         }
-        return "Пользователь с таким логином уже есть!";
+        userAccountDto.setError("Пользователь с таким логином уже есть!");
+        return userAccountDto;
     }
 
     public String resurrection(UUID userId) {

@@ -16,12 +16,4 @@ public class ShortBattleInfo {
     public void setBattleId(UUID battleId) {
         this.battleId = battleId;
     }
-
-//    public String getInfo() {
-//        return info;
-//    }
-//
-//    public void setInfo(String info) {
-//        this.info = info;
-//    }
 }
