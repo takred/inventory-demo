@@ -16,6 +16,7 @@ public class PersonDto {
     private Integer lvl;
     private Integer expForNextLvl;
     private Integer exp;
+    private String error;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
     private UUID userId;
@@ -29,6 +30,7 @@ public class PersonDto {
         lvl = person.lvl;
         expForNextLvl = person.expForNextLvl;
         exp = person.exp;
+        error = null;
         id = person.id;
         userId = person.userId;
     }

@@ -1,6 +1,7 @@
 package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
+import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.mapper.PersonMapperMapstruct;
@@ -24,20 +25,37 @@ public class PersonService {
         this.personMapperMapstruct = personMapperMapstruct;
     }
 
-    public String registerNewPerson(Person person, UUID userId) {
-        Person person1 = personRepository.findByName(person.getName()).orElse(null);
+    public PersonDto registerNewPerson(CreatePersonDto createPersonDto, UUID userId) {
+        Person person = personRepository.findByName(createPersonDto.getName()).orElse(null);
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-            return "Пользователя с таким логином не существует!";
+            person = new Person();
+            person.setId(null);
+            PersonDto personDto = personMapperMapstruct.map(person);
+            personDto.setError("Пользователя с таким логином не существует!");
+            return personDto;
         }
-        if (person1 != null) {
-            return "Персонаж с таким ником уже есть!";
+        if (person != null) {
+            person = new Person();
+            person.setId(null);
+            PersonDto personDto = personMapperMapstruct.map(person);
+            personDto.setError("Персонаж с таким ником уже есть!");
+            return personDto;
         }
+        person = new Person();
         person.setUserId(userId);
+        person.setName(createPersonDto.getName());
+        person.setMaxHp(100);
+        person.setHp(100);
+        person.setMinDamage(5);
+        person.setMaxDamage(15);
+        person.setLvl(0);
+        person.setExp(0);
+        person.setExpForNextLvl(100);
         personRepository.save(person);
         userAccount.setPersonId(person.getId());
         userAccountRepository.save(userAccount);
-        return person.getId().toString();
+        return personMapperMapstruct.map(person);
     }
 
     public List<PersonDto> getAllPersons() {

@@ -1,6 +1,7 @@
 package takred.inventorydemo.web;
 
 import org.springframework.web.bind.annotation.*;
+import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.service.PersonService;
@@ -18,9 +19,9 @@ public class PersonController {
     }
 
     @PostMapping(value = "register_new_person/{userId}")
-    public String registerNewPerson(@RequestBody Person person,
+    public PersonDto registerNewPerson(@RequestBody CreatePersonDto createPersonDto,
                                   @PathVariable("userId") UUID userId) {
-        return personService.registerNewPerson(person, userId);
+        return personService.registerNewPerson(createPersonDto, userId);
     }
 
     @GetMapping(value = "get_all_persons")
