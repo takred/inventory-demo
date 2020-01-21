@@ -31,11 +31,11 @@ public class UserAccountService {
         userAccountDto.setId(null);
         if (userAccountRepository.findByLogin(registerUserDto.getLogin()).orElse(null) == null) {
             UserAccount userAccount = new UserAccount();
-            userAccount.setLogin(userAccountDto.getLogin());
-            userAccount.setGold(userAccountDto.getGold());
+            userAccount.setLogin(registerUserDto.getLogin());
+            userAccount.setGold(1000);
             userAccountRepository.save(userAccount);
-            userAccountDto.setLogin(registerUserDto.getLogin());
-            userAccountDto.setGold(1000);
+            userAccountDto.setLogin(userAccount.getLogin());
+            userAccountDto.setGold(userAccount.getGold());
             userAccountDto.setId(userAccount.getId());
             return userAccountDto;
         }

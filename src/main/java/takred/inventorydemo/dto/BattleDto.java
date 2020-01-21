@@ -17,9 +17,22 @@ public class BattleDto {
     private Integer battleNumber;
     private UUID winner;
     private List<String> battleLog;
+    private boolean lvlUp;
+    private String error;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
 
     public BattleDto() {
+    }
+
+    public BattleDto(String string) {
+        personId = null;
+        monsterId = null;
+        monsterName = null;
+        battleNumber = null;
+        winner = null;
+        battleLog = null;
+        error = string;
+        id = null;
     }
 }

@@ -32,12 +32,27 @@ public class BattleService {
     }
 
     public BattleDto battle(UUID personId, UUID monsterId) {
-        Monster monster = new Monster(monsterRepository.findById(monsterId).get());
-        Person person = new Person(personRepository.findById(personId).get());
+        Monster monster = monsterRepository.findById(monsterId).orElse(null);
+        BattleDto battleDto;
+        if (monster == null) {
+            battleDto = new BattleDto("Такого монстра нет!");
+            return battleDto;
+        }
+        monster = new Monster(monster);
+        Person person = personRepository.findById(personId).orElse(null);
+        if (person == null){
+            battleDto = new BattleDto("Такого персонажа нет!");
+            return battleDto;
+        }
+        person = new Person(person);
+        if (person.getHp() <= 0) {
+            battleDto = new BattleDto("Ваш персонаж мёртв!");
+            return battleDto;
+        }
         List<Battle> allBattlesPerson = battleRepository.findByPersonId(personId);
         String message;
         Battle battle = new Battle();
-        BattleDto battleDto = new BattleDto();
+        boolean lvlUp = false;
         List<String> battleLog = new ArrayList<>();
         battle.setPersonId(person.getId());
         battle.setMonsterId(monsterId);
@@ -54,6 +69,7 @@ public class BattleService {
                 person.setExp(person.getExp() + monster.getExpForWin());
                 if (checkLvlUp(person)) {
                     lvlUp(person);
+                    lvlUp = true;
                 }
                 message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
                         monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!";
@@ -63,7 +79,7 @@ public class BattleService {
                 battleLog(battle.getId(), personId, turn, message);
                 battleLog.add(message);
                 battleDto = battleDto(battle.getId(), personId, monsterId, monster.getName(),
-                        battle.getBattleNumber(), battle.getWinner(), battleLog);
+                        battle.getBattleNumber(), battle.getWinner(), battleLog, lvlUp);
                 return battleDto;
             }
             message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
@@ -81,7 +97,7 @@ public class BattleService {
                 battleLog.add(message);
                 battleLog(battle.getId(), personId, turn + 1, message);
                 battleDto = battleDto(battle.getId(), personId, monsterId, monster.getName(),
-                        battle.getBattleNumber(), battle.getWinner(), battleLog);
+                        battle.getBattleNumber(), battle.getWinner(), battleLog, lvlUp);
                 return battleDto;
             }
             message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
@@ -102,7 +118,7 @@ public class BattleService {
     }
 
     private BattleDto battleDto(UUID id, UUID peronId, UUID monsterId, String monsterName,
-                                Integer battleNumber, UUID winner, List<String> battleLog) {
+                                Integer battleNumber, UUID winner, List<String> battleLog, boolean lvlUp) {
         BattleDto battleDto = new BattleDto();
         battleDto.setId(id);
         battleDto.setPersonId(peronId);
@@ -111,10 +127,12 @@ public class BattleService {
         battleDto.setBattleNumber(battleNumber);
         battleDto.setWinner(winner);
         battleDto.setBattleLog(battleLog);
+        battleDto.setLvlUp(lvlUp);
         return battleDto;
     }
 
     private void lvlUp(Person person) {
+        person.setMinDamage(person.getMinDamage() + 1);
         person.setMaxDamage(person.getMaxDamage() + 1);
         person.setMaxHp(person.getMaxHp() + 10);
         person.setHp(person.getMaxHp());
