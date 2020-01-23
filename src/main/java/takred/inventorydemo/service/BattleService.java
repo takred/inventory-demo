@@ -1,9 +1,12 @@
 package takred.inventorydemo.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import takred.inventorydemo.ActResultDto;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.entity.*;
+import takred.inventorydemo.exception.ObjectNotFoundException;
 import takred.inventorydemo.mapper.BattleMapperMapstruct;
 import takred.inventorydemo.repository.*;
 
@@ -13,7 +16,8 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class BattleService {
+@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+public class BattleService extends RuntimeException {
     private final PersonRepository personRepository;
     private final MonsterRepository monsterRepository;
     private final BattleRepository battleRepository;
@@ -71,8 +75,9 @@ public class BattleService {
         Battle battle = battleRepository.findById(battleId).orElse(null);
         ActResultDto actResultDto;
         if (battle == null) {
-            actResultDto = new ActResultDto("Такого боя нет!");
-            return actResultDto;
+//            actResultDto = new ActResultDto("Такого боя нет!");
+//            return actResultDto;
+            throw new ObjectNotFoundException("Такого боя нет!");
         }
         if (battle.getWinner() != null) {
             actResultDto = new ActResultDto();
