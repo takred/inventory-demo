@@ -8,6 +8,7 @@ import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
+import takred.inventorydemo.exception.ObjectNotFoundException;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.mapper.ItemMapperMapstruct;
 import takred.inventorydemo.repository.AllItemRepository;
@@ -59,12 +60,12 @@ public class ItemInInventoryService {
         Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
 
         if (person == null) {
-            return "Такого персонажа нет!";
+            throw new ObjectNotFoundException("Такого персонажа нет!");
         }
         Item item = allItemRepository.findByName(parameters.getNameItem());
 
         if (item == null) {
-            return "Такого предмета нет!";
+            throw new ObjectNotFoundException("Такого предмета нет!");
         }
         ItemInInventory itemInInventory = new ItemInInventory();
         itemInInventory.setIdPerson(person.getId());
@@ -76,11 +77,11 @@ public class ItemInInventoryService {
     public String onItem(ItemOnParameters parameters) {
         Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
         if (person == null) {
-            return "Такого персонажа нет!";
+            throw new ObjectNotFoundException("Такого персонажа нет!");
         }
         List<ItemInInventory> allIdItemInPersonInventory = itemInInventoryRepository.findByIdPerson(person.getId());
         if (allIdItemInPersonInventory == null) {
-            return "Ваш инвентарь пуст.";
+            throw new ObjectNotFoundException("Ваш инвентарь пуст.");
         }
         ItemInInventory itemInInventory = new ItemInInventory();
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
@@ -89,11 +90,11 @@ public class ItemInInventoryService {
                 break;
             }
             if (i + 1 == allIdItemInPersonInventory.size()) {
-                return "Такого предмета у вас нет!";
+                throw new ObjectNotFoundException("Такого предмета у вас нет!");
             }
         }
         if (itemInInventory.isItemOn()) {
-            return "Этот предмет и так надет!";
+            throw new ObjectNotFoundException("Этот предмет и так надет!");
         }
         Integer sumOn = 0;
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
@@ -102,7 +103,7 @@ public class ItemInInventoryService {
             }
         }
         if (sumOn > 4) {
-            return "Вы и так надели максимальное кол-во предметов(5)!";
+            throw new ObjectNotFoundException("Вы и так надели максимальное кол-во предметов(5)!");
         }
         itemInInventory.setItemOn(true);
         itemInInventoryRepository.save(itemInInventory);

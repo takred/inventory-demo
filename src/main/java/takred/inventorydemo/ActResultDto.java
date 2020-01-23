@@ -9,6 +9,7 @@ public class ActResultDto {
     private Integer hpLostMonster;
     private Integer hpLostPeron;
     private UUID winner;
+    private boolean lvlUp;
     private String message;
 
     public ActResultDto(String string) {

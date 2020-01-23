@@ -16,8 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-@ResponseStatus(code = HttpStatus.BAD_REQUEST)
-public class BattleService extends RuntimeException {
+public class BattleService {
     private final PersonRepository personRepository;
     private final MonsterRepository monsterRepository;
     private final BattleRepository battleRepository;
@@ -40,19 +39,20 @@ public class BattleService extends RuntimeException {
         BattleDto battleDto = new BattleDto();
         Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
-            return new BattleDto("Такого персонажа нет!");
+            throw new ObjectNotFoundException("Такого персонажа нет!");
         }
         person = new Person(person);
         if (person.isBattleProgress()) {
-            return new BattleDto("Этот персонаж уже и так в бою!");
+            throw new ObjectNotFoundException("Этот персонаж уже и так в бою!");
         }
         Monster monster = monsterRepository.findById(monsterId).orElse(null);
         if (monster == null) {
-            return new BattleDto("Такого монстра нет!");
+            throw new ObjectNotFoundException("Такого монстра нет!");
         }
+
         monster = new Monster(monster);
         if (person.getHp() <= 0) {
-            return new BattleDto("Ваш персонаж мёртв!");
+            throw new ObjectNotFoundException("Ваш персонаж мёртв!");
         }
         List<Battle> allBattlesPerson = battleRepository.findByPersonId(personId);
         Battle battleNew = new Battle();
@@ -75,8 +75,6 @@ public class BattleService extends RuntimeException {
         Battle battle = battleRepository.findById(battleId).orElse(null);
         ActResultDto actResultDto;
         if (battle == null) {
-//            actResultDto = new ActResultDto("Такого боя нет!");
-//            return actResultDto;
             throw new ObjectNotFoundException("Такого боя нет!");
         }
         if (battle.getWinner() != null) {
@@ -87,19 +85,16 @@ public class BattleService extends RuntimeException {
         }
         Monster monster = monsterRepository.findById(battle.getMonsterId()).orElse(null);
         if (monster == null) {
-            actResultDto = new ActResultDto("Такого монстра нет!");
-            return actResultDto;
+            throw new ObjectNotFoundException("Такого монстра нет!");
         }
         monster = new Monster(monster);
         Person person = personRepository.findById(battle.getPersonId()).orElse(null);
         if (person == null) {
-            actResultDto = new ActResultDto("Такого персонажа нет!");
-            return actResultDto;
+            throw new ObjectNotFoundException("Такого персонажа нет!");
         }
         person = new Person(person);
         if (person.getHp() <= 0) {
-            actResultDto = new ActResultDto("Ваш персонаж мёртв!");
-            return actResultDto;
+            throw new ObjectNotFoundException("Ваш персонаж мёртв!");
         }
 
         if (battle.getCurrentMonsterHp() != null) {
@@ -141,7 +136,7 @@ public class BattleService extends RuntimeException {
             battleRepository.save(battle);
             battleLog(battleNew.getId(), battle.getPersonId(), turn, message);
             battleLog.add(message);
-            actResultDto = actResultDto(currentDamagePerson, 0, battle.getPersonId(), message);
+            actResultDto = actResultDto(currentDamagePerson, 0, battle.getPersonId(), lvlUp, message);
             return actResultDto;
         }
         message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
@@ -159,7 +154,7 @@ public class BattleService extends RuntimeException {
                     person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!";
             battleLog.add(message);
             battleLog(battleNew.getId(), battle.getPersonId(), turn + 1, message);
-            actResultDto = actResultDto(currentDamagePerson, currentDamageMonster, battle.getMonsterId(), message);
+            actResultDto = actResultDto(currentDamagePerson, currentDamageMonster, battle.getMonsterId(), false, message);
             return actResultDto;
         }
         message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
@@ -169,7 +164,7 @@ public class BattleService extends RuntimeException {
         battle.setCurrentMonsterHp(monster.getHp());
         battleRepository.save(battle);
         personRepository.save(person);
-        return actResultDto(currentDamagePerson, currentDamageMonster, null,
+        return actResultDto(currentDamagePerson, currentDamageMonster, null, false,
                 "У вас осталось " + person.getHp() + ". У монстра осталось " + monster.getHp() + ".");
 //        turn = turn + 2;
     }
@@ -197,11 +192,12 @@ public class BattleService extends RuntimeException {
         return battleDto;
     }
 
-    private ActResultDto actResultDto(Integer hpLostMonster, Integer hpLostPerson, UUID winner, String message) {
+    private ActResultDto actResultDto(Integer hpLostMonster, Integer hpLostPerson, UUID winner, boolean lvlUp, String message) {
         ActResultDto actResultDto = new ActResultDto();
         actResultDto.setHpLostMonster(hpLostMonster);
         actResultDto.setHpLostPeron(hpLostPerson);
         actResultDto.setWinner(winner);
+        actResultDto.setLvlUp(lvlUp);
         actResultDto.setMessage(message);
         return actResultDto;
     }
