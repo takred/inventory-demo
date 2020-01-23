@@ -12,6 +12,7 @@
             </column>
             <column name="monster_id" type="UUID"/>
             <column name="battle_number" type="integer"/>
+            <column name="current_monster_hp" type="integer"/>
             <column name="person_id" type="UUID"/>
             <column name="winner" type="UUID"/>
         </createTable>

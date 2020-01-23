@@ -19,6 +19,7 @@
             <column name="exp" type="int"/>
             <column name="exp_for_next_lvl" type="int"/>
             <column name="user_id" type="UUID"/>
+            <column name="battle_progress" type="boolean"/>
         </createTable>
     </changeSet>
 

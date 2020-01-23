@@ -19,6 +19,7 @@ public class Person {
     private Integer lvl;
     private Integer expForNextLvl;
     private Integer exp;
+    private boolean battleProgress;
     @Id
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
@@ -35,6 +36,7 @@ public class Person {
         exp = person.exp;
         id = person.id;
         userId = person.userId;
+        battleProgress = person.battleProgress;
     }
     public Person() {
     }

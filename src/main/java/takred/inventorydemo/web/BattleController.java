@@ -1,8 +1,10 @@
 package takred.inventorydemo.web;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import takred.inventorydemo.ActResultDto;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.service.BattleService;
 
@@ -22,5 +24,10 @@ public class BattleController {
     public BattleDto battle(@PathVariable("personId") UUID personId,
                             @PathVariable("monsterId") UUID monsterId) {
         return battleService.battle(personId, monsterId);
+    }
+
+    @GetMapping(value = "battle/act/{battleId}")
+    public ActResultDto act(@PathVariable("battleId") UUID battleId) {
+        return battleService.act(battleId);
     }
 }

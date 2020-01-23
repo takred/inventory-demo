@@ -12,6 +12,7 @@ import java.util.UUID;
 public class Battle {
     private UUID personId;
     private UUID monsterId;
+    private Integer currentMonsterHp;
     private Integer battleNumber;
     private UUID winner;
     @Id
