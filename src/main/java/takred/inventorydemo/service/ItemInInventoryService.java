@@ -38,7 +38,7 @@ public class ItemInInventoryService {
     public List<ItemCombination> getPersonItems(String namePerson) {
         Person person = personRepository.findByName(namePerson).orElse(null);
         if (person == null) {
-            return new ArrayList<>();
+            throw new ObjectNotFoundException("Такого персонажа нет!");
         }
         List<ItemInInventory> allIdItemInPersonInventory = itemInInventoryRepository.findByIdPerson(person.getId());
         if (allIdItemInPersonInventory == null) {

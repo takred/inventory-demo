@@ -1,11 +1,13 @@
 package takred.inventorydemo.service;
 
+import org.hibernate.ObjectDeletedException;
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.RegisterUserDto;
 import takred.inventorydemo.dto.UserAccountDto;
 import takred.inventorydemo.entity.DeathAndResurrectionLog;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.entity.UserAccount;
+import takred.inventorydemo.exception.ObjectNotFoundException;
 import takred.inventorydemo.repository.DeathAndResurrectionLogRepository;
 import takred.inventorydemo.repository.PersonRepository;
 import takred.inventorydemo.repository.UserAccountRepository;
@@ -39,24 +41,23 @@ public class UserAccountService {
             userAccountDto.setId(userAccount.getId());
             return userAccountDto;
         }
-        userAccountDto.setError("Пользователь с таким логином уже есть!");
-        return userAccountDto;
+        throw new ObjectNotFoundException("Пользователь с таким логином уже есть!");
     }
 
     public String resurrection(UUID userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-            return "Аккаунта с таким логином нет!";
+            throw new ObjectNotFoundException("Аккаунта с таким логином нет!");
         }
         Person person = personRepository.findById(userAccount.getPersonId()).orElse(null);
         if (person == null) {
-            return "Персонажа с таким именем нет!";
+            throw new ObjectNotFoundException("Персонажа с таким именем нет!");
         }
         if (person.getHp() > 0) {
-            return "Ваш персонаж ещё жив!";
+            throw new ObjectNotFoundException("Ваш персонаж ещё жив!");
         }
         if (userAccount.getGold() < 500) {
-            return "У вас недостаточно денег для воскрешения!(нужно 500 золотых)";
+            throw new ObjectNotFoundException("У вас недостаточно денег для воскрешения!(нужно 500 золотых)");
         }
         person.setHp(person.getMaxHp());
         userAccount.setGold(userAccount.getGold() - 500);

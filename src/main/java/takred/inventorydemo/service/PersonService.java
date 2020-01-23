@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.UserAccount;
+import takred.inventorydemo.exception.ObjectNotFoundException;
 import takred.inventorydemo.mapper.PersonMapperMapstruct;
 import takred.inventorydemo.repository.PersonRepository;
 import takred.inventorydemo.entity.Person;
@@ -29,18 +30,20 @@ public class PersonService {
         Person person = personRepository.findByName(createPersonDto.getName()).orElse(null);
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-            person = new Person();
-            person.setId(null);
-            PersonDto personDto = personMapperMapstruct.map(person);
-            personDto.setError("Пользователя с таким логином не существует!");
-            return personDto;
+//            person = new Person();
+//            person.setId(null);
+//            PersonDto personDto = personMapperMapstruct.map(person);
+//            personDto.setError("Пользователя с таким логином не существует!");
+//            return personDto;
+            throw new ObjectNotFoundException("Пользователя с таким логином не существует!");
         }
         if (person != null) {
-            person = new Person();
-            person.setId(null);
-            PersonDto personDto = personMapperMapstruct.map(person);
-            personDto.setError("Персонаж с таким ником уже есть!");
-            return personDto;
+//            person = new Person();
+//            person.setId(null);
+//            PersonDto personDto = personMapperMapstruct.map(person);
+//            personDto.setError("Персонаж с таким ником уже есть!");
+//            return personDto;
+            throw new ObjectNotFoundException("Персонаж с таким ником уже есть!");
         }
         person = new Person();
         person.setUserId(userId);
