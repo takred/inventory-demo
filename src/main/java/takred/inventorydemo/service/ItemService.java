@@ -1,5 +1,6 @@
 package takred.inventorydemo.service;
 
+import antlr.collections.List;
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.ItemListDto;
@@ -26,5 +27,9 @@ public class ItemService {
         for (int i = 0; i < itemListDto.getParameters().size(); i++) {
             addItem(itemListDto.getParameters().get(i));
         }
+    }
+
+    public ItemListDto getAllItems() {
+        return new ItemListDto(allItemRepository.findAll());
     }
 }
