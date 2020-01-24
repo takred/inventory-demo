@@ -15,4 +15,8 @@ public class ObjectNotFoundException extends RuntimeException {
         super(message);
         this.errorCode = errorCode;
     }
+
+    public Integer getErrorCode() {
+        return errorCode;
+    }
 }
