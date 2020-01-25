@@ -1,5 +1,6 @@
 package takred.inventorydemo.service;
 
+import org.springframework.stereotype.Service;
 import takred.inventorydemo.DropMonsterListDto;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
+@Service
 public class DropMonsterService {
     private final DropMonsterRepository dropMonsterRepository;
     private final DropMonsterMapperMapstruct dropMonsterMapperMapstruct;

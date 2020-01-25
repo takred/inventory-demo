@@ -13,5 +13,6 @@
     <include file="add-battle-log-table.xml" relativeToChangelogFile="true"/>
     <include file="add-user-account-table.xml" relativeToChangelogFile="true"/>
     <include file="add-death-and-resurrection-log-table.xml" relativeToChangelogFile="true"/>
+    <include file="add-drop-monster-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

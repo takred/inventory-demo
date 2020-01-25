@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="add-drop-monster-table" author="takred">
+        <createTable tableName="drop_monster">
+            <column name="id" type="UUID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="monster_id" type="UUID"/>
+            <column name="item_id" type="UUID"/>
+            <column name="weight" type="int"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
