@@ -8,7 +8,7 @@ import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
-import takred.inventorydemo.exception.ObjectNotFoundException;
+import takred.inventorydemo.exception.CodeException;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.mapper.ItemMapperMapstruct;
 import takred.inventorydemo.repository.AllItemRepository;
@@ -38,7 +38,7 @@ public class ItemInInventoryService {
     public List<ItemCombination> getPersonItems(String namePerson) {
         Person person = personRepository.findByName(namePerson).orElse(null);
         if (person == null) {
-            throw new ObjectNotFoundException("Такого персонажа нет!");
+            throw new CodeException("Такого персонажа нет!");
         }
         List<ItemInInventory> allIdItemInPersonInventory = itemInInventoryRepository.findByIdPerson(person.getId());
         if (allIdItemInPersonInventory == null) {
@@ -60,12 +60,12 @@ public class ItemInInventoryService {
         Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
 
         if (person == null) {
-            throw new ObjectNotFoundException("Такого персонажа нет!");
+            throw new CodeException("Такого персонажа нет!");
         }
         Item item = allItemRepository.findByName(parameters.getNameItem());
 
         if (item == null) {
-            throw new ObjectNotFoundException("Такого предмета нет!");
+            throw new CodeException("Такого предмета нет!");
         }
         ItemInInventory itemInInventory = new ItemInInventory();
         itemInInventory.setIdPerson(person.getId());
@@ -77,11 +77,11 @@ public class ItemInInventoryService {
     public String onItem(ItemOnParameters parameters) {
         Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
         if (person == null) {
-            throw new ObjectNotFoundException("Такого персонажа нет!");
+            throw new CodeException("Такого персонажа нет!");
         }
         List<ItemInInventory> allIdItemInPersonInventory = itemInInventoryRepository.findByIdPerson(person.getId());
         if (allIdItemInPersonInventory == null) {
-            throw new ObjectNotFoundException("Ваш инвентарь пуст.");
+            throw new CodeException("Ваш инвентарь пуст.");
         }
         ItemInInventory itemInInventory = new ItemInInventory();
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
@@ -90,11 +90,11 @@ public class ItemInInventoryService {
                 break;
             }
             if (i + 1 == allIdItemInPersonInventory.size()) {
-                throw new ObjectNotFoundException("Такого предмета у вас нет!");
+                throw new CodeException("Такого предмета у вас нет!");
             }
         }
         if (itemInInventory.isItemOn()) {
-            throw new ObjectNotFoundException("Этот предмет и так надет!");
+            throw new CodeException("Этот предмет и так надет!");
         }
         Integer sumOn = 0;
         for (int i = 0; i < allIdItemInPersonInventory.size(); i++) {
@@ -103,7 +103,7 @@ public class ItemInInventoryService {
             }
         }
         if (sumOn > 4) {
-            throw new ObjectNotFoundException("Вы и так надели максимальное кол-во предметов(5)!");
+            throw new CodeException("Вы и так надели максимальное кол-во предметов(5)!");
         }
         itemInInventory.setItemOn(true);
         itemInInventoryRepository.save(itemInInventory);
