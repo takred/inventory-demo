@@ -1,13 +1,12 @@
 package takred.inventorydemo.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import takred.inventorydemo.ActResultDto;
+import takred.inventorydemo.AddInInventoryItemParameters;
 import takred.inventorydemo.dto.BattleDto;
+import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.*;
 import takred.inventorydemo.exception.ObjectNotFoundException;
-import takred.inventorydemo.mapper.BattleMapperMapstruct;
 import takred.inventorydemo.repository.*;
 
 import java.util.ArrayList;
@@ -22,17 +21,21 @@ public class BattleService {
     private final BattleRepository battleRepository;
     private final BattleLogRepository battleLogRepository;
     private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
+    private final DropMonsterService dropMonsterService;
+    private final ItemInInventoryService itemInInventoryService;
 //    private final BattleMapperMapstruct battleMapperMapstruct;
 
-    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository
+    public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository,
 //            , BattleMapperMapstruct battleMapperMapstruct
-    ) {
+                         DropMonsterService dropMonsterService, ItemInInventoryService itemInInventoryService) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
         this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
 //        this.battleMapperMapstruct = battleMapperMapstruct;
+        this.dropMonsterService = dropMonsterService;
+        this.itemInInventoryService = itemInInventoryService;
     }
 
     public BattleDto battle(UUID personId, UUID monsterId) {
@@ -127,6 +130,11 @@ public class BattleService {
             if (checkLvlUp(person)) {
                 lvlUp(person);
                 lvlUp = true;
+            }
+            if (dropMonsterService.tableNotEmpty(monster.getId()) && dropMonsterService.dropCheck()) {
+                ItemDto itemDto = dropMonsterService.dropItem(monster.getId());
+                AddInInventoryItemParameters parameters = new AddInInventoryItemParameters(person.getName(), itemDto.getName());
+                itemInInventoryService.addItemInInventory(parameters);
             }
             message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
                     monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!";

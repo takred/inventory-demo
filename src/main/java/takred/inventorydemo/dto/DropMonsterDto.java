@@ -8,10 +8,10 @@ import java.util.UUID;
 
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class DeathAndResurrectionLogDto {
-    private UUID personId;
-    private String message;
-    @Id
+public class DropMonsterDto {
+    private UUID monsterId;
+    private UUID itemId;
+    private Integer weight;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
 }
