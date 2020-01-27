@@ -4,19 +4,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class ObjectNotFoundException extends RuntimeException {
+public class CodedException extends RuntimeException {
     private final Integer errorCode;
-    public ObjectNotFoundException(String message) {
+    private final Integer responseStatus;
+
+    public CodedException(String message) {
         super(message);
         errorCode = 12;
+        responseStatus = 12;
     }
 
-    public ObjectNotFoundException(String message, Integer errorCode) {
+    public CodedException(String message, Integer errorCode, Integer responseStatus) {
         super(message);
         this.errorCode = errorCode;
+        this.responseStatus = responseStatus;
     }
 
     public Integer getErrorCode() {
         return errorCode;
+    }
+
+    public Integer getResponseStatus() {
+        return responseStatus;
     }
 }
