@@ -65,17 +65,17 @@ public class DropMonsterService {
 
     public ItemDto dropItem(UUID monsterId) {
         List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterId));
-        Integer weightSum = 0;
+        int weightSum = 0;
         for (int i = 0; i < dropMonsters.size(); i++) {
             weightSum = weightSum + dropMonsters.get(i).getWeight();
         }
-        Integer weightDrop = ThreadLocalRandom.current().nextInt(1, weightSum);
-        ItemDto itemDto = new ItemDto();
+        int weightDrop = ThreadLocalRandom.current().nextInt(1, weightSum);
         for (int i = 0; i < dropMonsters.size(); i++) {
             if (weightDrop <= dropMonsters.get(i).getWeight()) {
-                itemDto = itemMapperMapstruct.map(allItemRepository.findById(dropMonsters.get(i).getItemId()).get());
+                return itemMapperMapstruct.map(allItemRepository.findById(dropMonsters.get(i)
+                        .getItemId()).orElse(null));
             }
         }
-        return itemDto;
+        throw new  RuntimeException("До этого места доходить не должно.");
     }
 }
