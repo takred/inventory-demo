@@ -2,8 +2,11 @@ package takred.inventorydemo.web;
 
 import org.springframework.web.bind.annotation.*;
 import takred.inventorydemo.ItemListDto;
+import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.service.ItemService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/")
@@ -25,7 +28,7 @@ public class ItemController {
     }
 
     @GetMapping(value = "get_all_items")
-    public ItemListDto getAllItems() {
+    public List<ItemDto> getAllItems() {
         return itemService.getAllItems();
     }
 }

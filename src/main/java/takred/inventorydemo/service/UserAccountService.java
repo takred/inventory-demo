@@ -46,17 +46,17 @@ public class UserAccountService {
     public String resurrection(UUID userId) {
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-            throw new CodedException("Аккаунта с таким логином нет!", 100);
+            throw new CodedException("Аккаунта с таким логином нет!", 100, 404);
         }
         Person person = personRepository.findById(userAccount.getPersonId()).orElse(null);
         if (person == null) {
-            throw new CodedException("Персонажа с таким именем нет!", 200);
+            throw new CodedException("Персонажа с таким именем нет!", 200, 404);
         }
         if (person.getHp() > 0) {
-            throw new CodedException("Ваш персонаж ещё жив!", 300);
+            throw new CodedException("Ваш персонаж ещё жив!", 300, 404);
         }
         if (userAccount.getGold() < 500) {
-            throw new CodedException("У вас не хватает " + (500 - userAccount.getGold()) + " золота для воскрешения!(нужно 500 золотых)", 400);
+            throw new CodedException("У вас не хватает " + (500 - userAccount.getGold()) + " золота для воскрешения!(нужно 500 золотых)", 400, 404);
         }
         person.setHp(person.getMaxHp());
         userAccount.setGold(userAccount.getGold() - 500);
