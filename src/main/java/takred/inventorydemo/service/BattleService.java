@@ -7,7 +7,6 @@ import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.*;
 import takred.inventorydemo.exception.CodedException;
-import takred.inventorydemo.exception.ObjectNotFoundException;
 import takred.inventorydemo.repository.*;
 
 import java.util.ArrayList;
