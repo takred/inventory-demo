@@ -1,26 +1,29 @@
 package takred.inventorydemo.mapper;
 
-import org.springframework.stereotype.Component;
+import org.mapstruct.Mapper;
+import takred.inventorydemo.ItemCombination;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
 
-@Component
-public class ItemMapper {
-    public Item converterInEntity(ItemDto dto) {
-        Item entity = new Item();
-        entity.setArmor(dto.getArmor());
-        entity.setDamage(dto.getDamage());
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        return entity;
-    }
+import java.util.List;
+import java.util.UUID;
 
-    public ItemDto converterInDto(Item entity) {
-        ItemDto dto = new ItemDto();
-        dto.setArmor(entity.getArmor());
-        dto.setDamage(entity.getDamage());
-        dto.setId(entity.getId());
-        dto.setName(entity.getName());
-        return dto;
+@Mapper(componentModel = "spring")
+public interface ItemMapper {
+    ItemDto map(Item entity);
+
+    Item map(ItemDto dto);
+
+    List<ItemDto> map(List<Item> entityList);
+
+
+    public default ItemCombination map(Item entity, UUID itemId) {
+        ItemCombination itemCombination = new ItemCombination();
+        itemCombination.setArmor(entity.getArmor());
+        itemCombination.setDamage(entity.getDamage());
+        itemCombination.setName(entity.getName());
+        itemCombination.setItemId(itemId);
+        itemCombination.setId(entity.getId());
+        return itemCombination;
     }
 }

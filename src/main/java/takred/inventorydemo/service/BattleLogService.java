@@ -7,7 +7,6 @@ import takred.inventorydemo.entity.Battle;
 import takred.inventorydemo.entity.BattleLog;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.mapper.BattleLogMapper;
-import takred.inventorydemo.mapper.BattleLogMapperMapstruct;
 import takred.inventorydemo.repository.BattleLogRepository;
 import takred.inventorydemo.repository.BattleRepository;
 import takred.inventorydemo.repository.MonsterRepository;
@@ -25,15 +24,14 @@ public class BattleLogService {
     private final MonsterRepository monsterRepository;
     private final BattleRepository battleRepository;
     private final BattleLogMapper battleLogMapper;
-    private final BattleLogMapperMapstruct battleLogMapperMapstruct;
 
-    public BattleLogService(BattleLogRepository battleLogRepository, PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogMapper battleLogMapper, BattleLogMapperMapstruct battleLogMapperMapstruct) {
+    public BattleLogService(BattleLogRepository battleLogRepository, PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository,
+                            BattleLogMapper battleLogMapper) {
         this.battleLogRepository = battleLogRepository;
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogMapper = battleLogMapper;
-        this.battleLogMapperMapstruct = battleLogMapperMapstruct;
     }
 
     public List<ShortBattleInfo> getShortBattleInfo(UUID personId) {
@@ -74,7 +72,7 @@ public class BattleLogService {
         }
 
         for (int i = 0; i < battleLogs.size(); i++) {
-            battleLogDtos.add(battleLogMapperMapstruct.map(battleLogs.get(i)));
+            battleLogDtos.add(battleLogMapper.map(battleLogs.get(i)));
         }
        return battleLogDtos;
     }
