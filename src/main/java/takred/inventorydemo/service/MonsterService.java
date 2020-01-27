@@ -3,7 +3,7 @@ package takred.inventorydemo.service;
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
-import takred.inventorydemo.exception.CodeException;
+import takred.inventorydemo.exception.CodedException;
 import takred.inventorydemo.mapper.MonsterMapper;
 import takred.inventorydemo.mapper.MonsterMapperMapstruct;
 import takred.inventorydemo.repository.MonsterRepository;
@@ -63,7 +63,7 @@ public class MonsterService {
             monsterRepository.save(monster);
             return "Монстр успешно добавлен.";
         }
-        throw  new CodeException("Такое имя монстра уже есть!");
+        throw  new CodedException("Такое имя монстра уже есть!");
     }
 
     public void addMonsters(MonsterListDto monsterListDto) {

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.ActResultDto;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.entity.*;
-import takred.inventorydemo.exception.CodeException;
+import takred.inventorydemo.exception.CodedException;
 import takred.inventorydemo.repository.*;
 
 import java.util.ArrayList;
@@ -36,20 +36,20 @@ public class BattleService {
         BattleDto battleDto = new BattleDto();
         Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
-            throw new CodeException("Такого персонажа нет!");
+            throw new CodedException("Такого персонажа нет!");
         }
         person = new Person(person);
         if (person.isBattleProgress()) {
-            throw new CodeException("Этот персонаж уже и так в бою!");
+            throw new CodedException("Этот персонаж уже и так в бою!");
         }
         Monster monster = monsterRepository.findById(monsterId).orElse(null);
         if (monster == null) {
-            throw new CodeException("Такого монстра нет!");
+            throw new CodedException("Такого монстра нет!");
         }
 
         monster = new Monster(monster);
         if (person.getHp() <= 0) {
-            throw new CodeException("Ваш персонаж мёртв!");
+            throw new CodedException("Ваш персонаж мёртв!");
         }
         List<Battle> allBattlesPerson = battleRepository.findByPersonId(personId);
         Battle battleNew = new Battle();
@@ -72,7 +72,7 @@ public class BattleService {
         Battle battle = battleRepository.findById(battleId).orElse(null);
         ActResultDto actResultDto;
         if (battle == null) {
-            throw new CodeException("Такого боя нет!");
+            throw new CodedException("Такого боя нет!");
         }
         if (battle.getWinner() != null) {
             actResultDto = new ActResultDto();
@@ -82,16 +82,16 @@ public class BattleService {
         }
         Monster monster = monsterRepository.findById(battle.getMonsterId()).orElse(null);
         if (monster == null) {
-            throw new CodeException("Такого монстра нет!");
+            throw new CodedException("Такого монстра нет!");
         }
         monster = new Monster(monster);
         Person person = personRepository.findById(battle.getPersonId()).orElse(null);
         if (person == null) {
-            throw new CodeException("Такого персонажа нет!");
+            throw new CodedException("Такого персонажа нет!");
         }
         person = new Person(person);
         if (person.getHp() <= 0) {
-            throw new CodeException("Ваш персонаж мёртв!");
+            throw new CodedException("Ваш персонаж мёртв!");
         }
 
         if (battle.getCurrentMonsterHp() != null) {

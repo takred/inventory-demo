@@ -4,14 +4,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class CodeException extends RuntimeException {
+public class CodedException extends RuntimeException {
     private final Integer errorCode;
-    public CodeException(String message) {
+    public CodedException(String message) {
         super(message);
         errorCode = 12;
     }
 
-    public CodeException(String message, Integer errorCode) {
+    public CodedException(String message, Integer errorCode) {
         super(message);
         this.errorCode = errorCode;
     }
