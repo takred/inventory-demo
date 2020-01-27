@@ -22,5 +22,4 @@ public class ItemCombination {
     }
 
     public ItemCombination() {}
-
 }
