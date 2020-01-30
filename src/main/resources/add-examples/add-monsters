@@ -1,0 +1,26 @@
+{
+	"parameters":[
+		{
+			"name":"Волк",
+			"damage":1,
+			"hp":100,
+			"expForWin":10,
+			"monsterCode":"WOLF"
+		},
+		{
+			"name":"Крыса",
+			"damage":1,
+			"hp":10,
+			"expForWin":2,
+			"monsterCode":"RAT"
+		},
+		{
+			"name":"Медведь",
+			"damage":10,
+			"hp":150,
+			"expForWin":15,
+			"monsterCode":"BEAR"
+		}
+		]
+
+}

@@ -1,0 +1,6 @@
+{
+	"name":"Куртка",
+    "damage":1,
+    "armor":10,
+    "itemCode":"JACKET"
+}

@@ -1,0 +1,7 @@
+{
+	"name":"Волк",
+	"damage":1,
+	"hp":100,
+	"expForWin":10,
+	"monsterCode":"WOLF"
+}

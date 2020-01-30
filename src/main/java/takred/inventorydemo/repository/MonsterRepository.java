@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface MonsterRepository extends JpaRepository<Monster, UUID> {
 
     Monster findByName(String name);
+
+    Monster findByMonsterCode(String monsterCode);
 }

@@ -13,6 +13,7 @@ public class ItemDto {
     private String name;
     private Integer damage;
     private Integer armor;
+    private String itemCode;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
 }

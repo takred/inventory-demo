@@ -1,0 +1,15 @@
+{
+	"parameters":[
+		{
+        	"monsterCode":"WOLF",
+	        "itemCode":"BOOTS",
+	        "weight":4
+        },
+		{
+	        "monsterCode":"WALF",
+	        "itemCode":"JACKET",
+	        "weight":6
+        }
+		]
+
+}

@@ -9,8 +9,8 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DropMonsterDto {
-    private UUID monsterId;
-    private UUID itemId;
+    private String monsterCode;
+    private String itemCode;
     private Integer weight;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();

@@ -10,8 +10,8 @@
             <column name="id" type="UUID">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="monster_id" type="UUID"/>
-            <column name="item_id" type="UUID"/>
+            <column name="monster_code" type="varchar(255)"/>
+            <column name="item_code" type="varchar(255)"/>
             <column name="weight" type="int"/>
         </createTable>
     </changeSet>
