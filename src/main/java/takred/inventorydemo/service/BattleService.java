@@ -125,8 +125,13 @@ public class BattleService {
                 AddInInventoryItemParameters parameters = new AddInInventoryItemParameters(person.getName(), itemDto.getName());
                 itemInInventoryService.addItemInInventory(parameters);
             }
-            message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
-                    monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!";
+            if (lvlUp) {
+                message = person.getName() + " наносит " + currentDamagePerson + " урона."
+                        + monster.getName() + " повержен! Победа! Герой получил новый уровень!";
+            } else {
+                message = person.getName() + " наносит " + currentDamagePerson + " урона."
+                        + monster.getName() + " повержен! Победа!";
+            }
             person.setBattleProgress(false);
             personRepository.save(person);
             battle.setWinner(battle.getPersonId());
@@ -147,8 +152,8 @@ public class BattleService {
             personRepository.save(person);
             battle.setWinner(battle.getMonsterId());
             battleRepository.save(battle);
-            message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
-                    person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!";
+            message = monster.getName() + " наносит " + currentDamageMonster + " урона. " + monster.getName()
+                    + " загрыз героя! Сокрушительное поражение, герой отправляется в Валгаллу!";
             battleLog.add(message);
             battleLog(battleNew.getId(), battle.getPersonId(), turn + 1, message);
             actResultDto = actResultDto(currentDamagePerson, currentDamageMonster, battle.getMonsterId(), false, message);
@@ -162,7 +167,8 @@ public class BattleService {
         battleRepository.save(battle);
         personRepository.save(person);
         return actResultDto(currentDamagePerson, currentDamageMonster, null, false,
-                "У вас осталось " + person.getHp() + ". У монстра осталось " + monster.getHp() + ".");
+                person.getName() + " наносит " + currentDamagePerson + " урона. У " + monster.getName() +" осталось " + monster.getHp() + " здоровья."
+                        + "\n" + monster.getName() + " наносит " + currentDamageMonster + " урона." + "У " + person.getName() + " осталось " + person.getHp() + " здоровья.");
     }
 
     private void battleLog(UUID battleId, UUID personId, Integer turn, String message) {
