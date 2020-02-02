@@ -13,7 +13,6 @@ import takred.inventorydemo.repository.MonsterRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -56,7 +55,7 @@ public class DropMonsterService {
     }
 
     public boolean tableNotEmpty(String monsterCode) {
-        List<DropMonster> items = new ArrayList<>(dropMonsterRepository.findByMonsterCode(monsterCode));
+        List<DropMonster> items = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterCode));
         if (items.size() > 0) {
             return true;
         }
@@ -64,7 +63,7 @@ public class DropMonsterService {
     }
 
     public ItemDto dropItem(String monsterCode) {
-        List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterCode(monsterCode));
+        List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterCode));
         int weightSum = 0;
         for (int i = 0; i < dropMonsters.size(); i++) {
             weightSum = weightSum + dropMonsters.get(i).getWeight();

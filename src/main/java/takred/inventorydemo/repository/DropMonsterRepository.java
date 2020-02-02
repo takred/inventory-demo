@@ -8,6 +8,6 @@ import java.util.UUID;
 
 public interface DropMonsterRepository extends JpaRepository<DropMonster, UUID> {
 
-    List<DropMonster> findByMonsterCode(String monsterCode);
+    List<DropMonster> findByMonsterId(String monsterId);
 
 }
