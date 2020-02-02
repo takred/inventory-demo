@@ -31,9 +31,4 @@ public class BattleLogController {
     public List<BattleLogDto> getBattleLog(@PathVariable("battleId") UUID battleId) {
         return battleLogService.getBattleLog(battleId);
     }
-
-//    @RequestMapping(value = "get_battle_log")
-////    public List<BattleLogDto> getBattleLogs(@PathVariable("battleId") UUID battleId) {
-////        return battleLogService.getBattleLog(battleId);
-////    }
 }

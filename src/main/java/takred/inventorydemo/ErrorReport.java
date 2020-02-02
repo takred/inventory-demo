@@ -13,16 +13,4 @@ public class ErrorReport {
         this.message = message;
         this.responseStatus = responseStatus;
     }
-
-//    public int getErrorCode() {
-//        return errorCode;
-//    }
-
-//    public String getMessage() {
-//        return message;
-//    }
-
-//    public Integer getResponseStatus() {
-//        return responseStatus;
-//    }
 }

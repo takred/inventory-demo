@@ -23,17 +23,14 @@ public class BattleService {
     private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
     private final DropMonsterService dropMonsterService;
     private final ItemInInventoryService itemInInventoryService;
-//    private final BattleMapperMapstruct battleMapperMapstruct;
 
     public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository,
-//            , BattleMapperMapstruct battleMapperMapstruct
                          DropMonsterService dropMonsterService, ItemInInventoryService itemInInventoryService) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
         this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
-//        this.battleMapperMapstruct = battleMapperMapstruct;
         this.dropMonsterService = dropMonsterService;
         this.itemInInventoryService = itemInInventoryService;
     }
@@ -103,21 +100,13 @@ public class BattleService {
         if (battle.getCurrentMonsterHp() != null) {
             monster.setHp(battle.getCurrentMonsterHp());
         }
-//        List<Battle> allBattlesPerson = battleRepository.findByPersonId(battle.getPersonId());
         String message;
         Battle battleNew = new Battle();
         boolean lvlUp = false;
-//        List<String> battleLog = new ArrayList<>();
         List<String> battleLog = new ArrayList<>();
         List<BattleLog> battleLogs = battleLogRepository.findByBattleId(battleId);
         battleNew.setPersonId(person.getId());
         battleNew.setMonsterId(battle.getMonsterId());
-//        if (allBattlesPerson == null) {
-//            battleNew.setBattleNumber(1);
-//        } else {
-//            battleNew.setBattleNumber(allBattlesPerson.size() + 1);
-//        }
-//        BattleLog battleLog
         Integer turn = 1;
         if (battleLogs.size() > 0) {
             turn = battleLog.size() + 1;
@@ -174,7 +163,6 @@ public class BattleService {
         personRepository.save(person);
         return actResultDto(currentDamagePerson, currentDamageMonster, null, false,
                 "У вас осталось " + person.getHp() + ". У монстра осталось " + monster.getHp() + ".");
-//        turn = turn + 2;
     }
 
     private void battleLog(UUID battleId, UUID personId, Integer turn, String message) {

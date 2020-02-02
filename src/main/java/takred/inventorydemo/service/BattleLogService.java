@@ -78,17 +78,4 @@ public class BattleLogService {
         }
        return battleLogDtos;
     }
-
-//    public List<BattleLogDto> getBattleLogs(UUID battleId) {
-//        List<BattleLog> battleLogs = battleLogRepository.findAll();
-//        List<BattleLogDto> battleLogDtos = new ArrayList<>();
-//        if (battleLogs == null) {
-//            return null;
-//        }
-//
-//        for (int i = 0; i < battleLogs.size(); i++) {
-//            battleLogDtos.add(battleLogMapper.converterInDto(battleLogs.get(i)));
-//        }
-//       return battleLogDtos;
-//    }
 }
