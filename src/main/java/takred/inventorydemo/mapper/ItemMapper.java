@@ -17,13 +17,13 @@ public interface ItemMapper {
     List<ItemDto> map(List<Item> entityList);
 
 
-    public default ItemCombination map(Item entity, UUID itemId) {
+    public default ItemCombination map(Item item, UUID itemInInventoryId) {
         ItemCombination itemCombination = new ItemCombination();
-        itemCombination.setArmor(entity.getArmor());
-        itemCombination.setDamage(entity.getDamage());
-        itemCombination.setName(entity.getName());
-        itemCombination.setItemId(itemId);
-        itemCombination.setId(entity.getId());
+        itemCombination.setArmor(item.getArmor());
+        itemCombination.setDamage(item.getDamage());
+        itemCombination.setName(item.getName());
+        itemCombination.setItemId(item.getId());
+        itemCombination.setId(itemInInventoryId);
         return itemCombination;
     }
 }
