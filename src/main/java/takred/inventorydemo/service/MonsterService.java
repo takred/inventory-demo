@@ -4,8 +4,8 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
 import takred.inventorydemo.exception.CodedException;
+//import takred.inventorydemo.mapper.MonsterMapper;
 import takred.inventorydemo.mapper.MonsterMapper;
-import takred.inventorydemo.mapper.MonsterMapperMapstruct;
 import takred.inventorydemo.repository.MonsterRepository;
 import takred.inventorydemo.entity.Monster;
 
@@ -17,13 +17,15 @@ import java.util.UUID;
 @Service
 public class MonsterService {
     private final MonsterRepository monsterRepository;
+//    private final MonsterMapper monsterMapper;
     private final MonsterMapper monsterMapper;
-    private final MonsterMapperMapstruct monsterMapperMapstruct;
 
-    public MonsterService(MonsterRepository monsterRepository, MonsterMapper monsterMapper, MonsterMapperMapstruct monsterMapperMapstruct) {
+    public MonsterService(MonsterRepository monsterRepository,
+//                          MonsterMapper monsterMapper,
+                          MonsterMapper monsterMapper) {
         this.monsterRepository = monsterRepository;
+//        this.monsterMapper = monsterMapper;
         this.monsterMapper = monsterMapper;
-        this.monsterMapperMapstruct = monsterMapperMapstruct;
     }
 
     @PostConstruct
@@ -77,7 +79,7 @@ public class MonsterService {
         List<MonsterDto> allMonsterDto = new ArrayList<>();
         if (allMonster.size() > 0) {
             for (int i = 0; i < allMonster.size(); i++) {
-                allMonsterDto.add(monsterMapperMapstruct.map(allMonster.get(i)));
+                allMonsterDto.add(monsterMapper.map(allMonster.get(i)));
             }
         }
         return allMonsterDto;
@@ -88,6 +90,6 @@ public class MonsterService {
         if (monster == null) {
             return null;
         }
-        return monsterMapperMapstruct.map(monster);
+        return monsterMapper.map(monster);
     }
 }
