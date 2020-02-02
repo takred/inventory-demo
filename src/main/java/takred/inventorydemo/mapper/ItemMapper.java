@@ -1,6 +1,7 @@
 package takred.inventorydemo.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import takred.inventorydemo.ItemCombination;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.Item;
@@ -16,14 +17,10 @@ public interface ItemMapper {
 
     List<ItemDto> map(List<Item> entityList);
 
-
-    public default ItemCombination map(Item item, UUID itemInInventoryId) {
-        ItemCombination itemCombination = new ItemCombination();
-        itemCombination.setArmor(item.getArmor());
-        itemCombination.setDamage(item.getDamage());
-        itemCombination.setName(item.getName());
-        itemCombination.setItemId(item.getId());
-        itemCombination.setId(itemInInventoryId);
-        return itemCombination;
-    }
+    @Mapping(source = "item.name", target = "name")
+    @Mapping(source = "item.damage", target = "damage")
+    @Mapping(source = "item.armor", target = "armor")
+    @Mapping(source = "item.id", target = "itemId")
+    @Mapping(source = "itemInInventoryId", target = "id")
+    ItemCombination map(Item item, UUID itemInInventoryId);
 }
