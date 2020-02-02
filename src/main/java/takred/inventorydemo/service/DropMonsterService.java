@@ -5,9 +5,8 @@ import takred.inventorydemo.DropMonsterListDto;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.DropMonster;
-import takred.inventorydemo.entity.Item;
-import takred.inventorydemo.mapper.DropMonsterMapperMapstruct;
-import takred.inventorydemo.mapper.ItemMapperMapstruct;
+import takred.inventorydemo.mapper.DropMonsterMapper;
+import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.repository.DropMonsterRepository;
 import takred.inventorydemo.repository.MonsterRepository;
@@ -20,15 +19,15 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class DropMonsterService {
     private final DropMonsterRepository dropMonsterRepository;
-    private final DropMonsterMapperMapstruct dropMonsterMapperMapstruct;
-    private final ItemMapperMapstruct itemMapperMapstruct;
+    private final DropMonsterMapper dropMonsterMapper;
+    private final ItemMapper itemMapper;
     private final MonsterRepository monsterRepository;
     private final AllItemRepository allItemRepository;
 
-    public DropMonsterService(DropMonsterRepository dropMonsterRepository, DropMonsterMapperMapstruct dropMonsterMapperMapstruct, ItemMapperMapstruct itemMapperMapstruct, MonsterRepository monsterRepository, AllItemRepository allItemRepository) {
+    public DropMonsterService(DropMonsterRepository dropMonsterRepository, DropMonsterMapper dropMonsterMapper, ItemMapper itemMapper, MonsterRepository monsterRepository, AllItemRepository allItemRepository) {
         this.dropMonsterRepository = dropMonsterRepository;
-        this.dropMonsterMapperMapstruct = dropMonsterMapperMapstruct;
-        this.itemMapperMapstruct = itemMapperMapstruct;
+        this.dropMonsterMapper = dropMonsterMapper;
+        this.itemMapper = itemMapper;
         this.monsterRepository = monsterRepository;
         this.allItemRepository = allItemRepository;
     }
@@ -73,8 +72,8 @@ public class DropMonsterService {
         int weightDrop = ThreadLocalRandom.current().nextInt(1, weightSum);
         for (int i = 0; i < dropMonsters.size(); i++) {
             if (weightDrop <= dropMonsters.get(i).getWeight()) {
-                return itemMapperMapstruct.map(allItemRepository.findById(dropMonsters.get(i)
-                        .getItemId()).get());
+                return itemMapper.map(allItemRepository.findById(dropMonsters.get(i)
+                        .getItemId()).orElse(null));
             }
         }
         throw new  RuntimeException("До этого места доходить не должно.");

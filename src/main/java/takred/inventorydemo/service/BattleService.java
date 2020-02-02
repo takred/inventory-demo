@@ -23,17 +23,14 @@ public class BattleService {
     private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
     private final DropMonsterService dropMonsterService;
     private final ItemInInventoryService itemInInventoryService;
-//    private final BattleMapperMapstruct battleMapperMapstruct;
 
     public BattleService(PersonRepository personRepository, MonsterRepository monsterRepository, BattleRepository battleRepository, BattleLogRepository battleLogRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository,
-//            , BattleMapperMapstruct battleMapperMapstruct
                          DropMonsterService dropMonsterService, ItemInInventoryService itemInInventoryService) {
         this.personRepository = personRepository;
         this.monsterRepository = monsterRepository;
         this.battleRepository = battleRepository;
         this.battleLogRepository = battleLogRepository;
         this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
-//        this.battleMapperMapstruct = battleMapperMapstruct;
         this.dropMonsterService = dropMonsterService;
         this.itemInInventoryService = itemInInventoryService;
     }
@@ -103,21 +100,13 @@ public class BattleService {
         if (battle.getCurrentMonsterHp() != null) {
             monster.setHp(battle.getCurrentMonsterHp());
         }
-//        List<Battle> allBattlesPerson = battleRepository.findByPersonId(battle.getPersonId());
         String message;
         Battle battleNew = new Battle();
         boolean lvlUp = false;
-//        List<String> battleLog = new ArrayList<>();
         List<String> battleLog = new ArrayList<>();
         List<BattleLog> battleLogs = battleLogRepository.findByBattleId(battleId);
         battleNew.setPersonId(person.getId());
         battleNew.setMonsterId(battle.getMonsterId());
-//        if (allBattlesPerson == null) {
-//            battleNew.setBattleNumber(1);
-//        } else {
-//            battleNew.setBattleNumber(allBattlesPerson.size() + 1);
-//        }
-//        BattleLog battleLog
         Integer turn = 1;
         if (battleLogs.size() > 0) {
             turn = battleLog.size() + 1;
@@ -136,8 +125,13 @@ public class BattleService {
                 AddInInventoryItemParameters parameters = new AddInInventoryItemParameters(person.getName(), itemDto.getName());
                 itemInInventoryService.addItemInInventory(parameters);
             }
-            message = person.getName() + " наносит " + currentDamagePerson + " урона. У " +
-                    monster.getName() + " осталось " + monster.getHp() + " здоровья." + " Победил герой!";
+            if (lvlUp) {
+                message = person.getName() + " наносит " + currentDamagePerson + " урона."
+                        + monster.getName() + " повержен! Победа! Герой получил новый уровень!";
+            } else {
+                message = person.getName() + " наносит " + currentDamagePerson + " урона."
+                        + monster.getName() + " повержен! Победа!";
+            }
             person.setBattleProgress(false);
             personRepository.save(person);
             battle.setWinner(battle.getPersonId());
@@ -158,8 +152,8 @@ public class BattleService {
             personRepository.save(person);
             battle.setWinner(battle.getMonsterId());
             battleRepository.save(battle);
-            message = monster.getName() + " наносит " + currentDamageMonster + " урона. У " +
-                    person.getName() + " осталось " + person.getHp() + " здоровья." + " Победил монстр!";
+            message = monster.getName() + " наносит " + currentDamageMonster + " урона. " + monster.getName()
+                    + " загрыз героя! Сокрушительное поражение, герой отправляется в Валгаллу!";
             battleLog.add(message);
             battleLog(battleNew.getId(), battle.getPersonId(), turn + 1, message);
             actResultDto = actResultDto(currentDamagePerson, currentDamageMonster, battle.getMonsterId(), false, message);
@@ -173,8 +167,8 @@ public class BattleService {
         battleRepository.save(battle);
         personRepository.save(person);
         return actResultDto(currentDamagePerson, currentDamageMonster, null, false,
-                "У вас осталось " + person.getHp() + ". У монстра осталось " + monster.getHp() + ".");
-//        turn = turn + 2;
+                person.getName() + " наносит " + currentDamagePerson + " урона. У " + monster.getName() +" осталось " + monster.getHp() + " здоровья."
+                        + "\n" + monster.getName() + " наносит " + currentDamageMonster + " урона." + "У " + person.getName() + " осталось " + person.getHp() + " здоровья.");
     }
 
     private void battleLog(UUID battleId, UUID personId, Integer turn, String message) {

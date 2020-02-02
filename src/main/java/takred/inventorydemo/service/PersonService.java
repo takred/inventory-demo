@@ -5,7 +5,7 @@ import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.exception.CodedException;
-import takred.inventorydemo.mapper.PersonMapperMapstruct;
+import takred.inventorydemo.mapper.PersonMapper;
 import takred.inventorydemo.repository.PersonRepository;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.repository.UserAccountRepository;
@@ -18,31 +18,21 @@ import java.util.UUID;
 public class PersonService {
     private final PersonRepository personRepository;
     private final UserAccountRepository userAccountRepository;
-    private final PersonMapperMapstruct personMapperMapstruct;
+    private final PersonMapper personMapper;
 
-    public PersonService(PersonRepository personRepository, UserAccountRepository userAccountRepository, PersonMapperMapstruct personMapperMapstruct) {
+    public PersonService(PersonRepository personRepository, UserAccountRepository userAccountRepository, PersonMapper personMapper) {
         this.personRepository = personRepository;
         this.userAccountRepository = userAccountRepository;
-        this.personMapperMapstruct = personMapperMapstruct;
+        this.personMapper = personMapper;
     }
 
     public PersonDto registerNewPerson(CreatePersonDto createPersonDto, UUID userId) {
         Person person = personRepository.findByName(createPersonDto.getName()).orElse(null);
         UserAccount userAccount = userAccountRepository.findById(userId).orElse(null);
         if (userAccount == null) {
-//            person = new Person();
-//            person.setId(null);
-//            PersonDto personDto = personMapperMapstruct.map(person);
-//            personDto.setError("Пользователя с таким логином не существует!");
-//            return personDto;
             throw new CodedException("Пользователя с таким логином не существует!");
         }
         if (person != null) {
-//            person = new Person();
-//            person.setId(null);
-//            PersonDto personDto = personMapperMapstruct.map(person);
-//            personDto.setError("Персонаж с таким ником уже есть!");
-//            return personDto;
             throw new CodedException("Персонаж с таким ником уже есть!");
         }
         person = new Person();
@@ -58,7 +48,7 @@ public class PersonService {
         personRepository.save(person);
         userAccount.setPersonId(person.getId());
         userAccountRepository.save(userAccount);
-        return personMapperMapstruct.map(person);
+        return personMapper.map(person);
     }
 
     public List<PersonDto> getAllPersons() {
@@ -66,7 +56,7 @@ public class PersonService {
         List<PersonDto> allPersonsDto = new ArrayList<>();
         if (allPersons.size() > 0) {
             for (int i = 0; i < allPersons.size(); i++) {
-                allPersonsDto.add(personMapperMapstruct.map(allPersons.get(i)));
+                allPersonsDto.add(personMapper.map(allPersons.get(i)));
             }
         }
         return allPersonsDto;
@@ -77,6 +67,6 @@ public class PersonService {
         if (person == null) {
             return null;
         }
-        return personMapperMapstruct.map(person);
+        return personMapper.map(person);
     }
 }

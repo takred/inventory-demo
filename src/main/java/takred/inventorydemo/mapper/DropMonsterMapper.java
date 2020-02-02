@@ -5,7 +5,7 @@ import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.entity.DropMonster;
 
 @Mapper(componentModel = "spring")
-public interface DropMonsterMapperMapstruct {
+public interface DropMonsterMapper {
 
     DropMonster map(DropMonsterDto dto);
 
