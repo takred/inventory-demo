@@ -11,8 +11,8 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class DropMonster {
-    private String monsterCode;
-    private String itemCode;
+    private UUID monsterId;
+    private UUID itemId;
     private Integer weight;
     @Id
     @EqualsAndHashCode.Include

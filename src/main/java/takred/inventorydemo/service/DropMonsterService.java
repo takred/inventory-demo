@@ -5,6 +5,7 @@ import takred.inventorydemo.DropMonsterListDto;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.DropMonster;
+import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.mapper.DropMonsterMapperMapstruct;
 import takred.inventorydemo.mapper.ItemMapperMapstruct;
 import takred.inventorydemo.repository.AllItemRepository;
@@ -13,7 +14,7 @@ import takred.inventorydemo.repository.MonsterRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -35,8 +36,8 @@ public class DropMonsterService {
     //спросить у Ильи
     public void addDropMonster(DropMonsterDto dto) {
         DropMonster dropMonster = new DropMonster();
-        dropMonster.setMonsterCode(dto.getMonsterCode());
-        dropMonster.setItemCode(dto.getItemCode());
+        dropMonster.setMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId());
+        dropMonster.setItemId(monsterRepository.findByMonsterCode(dto.getItemCode()).getId());
         dropMonster.setWeight(dto.getWeight());
         dropMonsterRepository.save(dropMonster);
     }
@@ -72,8 +73,8 @@ public class DropMonsterService {
         int weightDrop = ThreadLocalRandom.current().nextInt(1, weightSum);
         for (int i = 0; i < dropMonsters.size(); i++) {
             if (weightDrop <= dropMonsters.get(i).getWeight()) {
-                return itemMapperMapstruct.map(allItemRepository.findByItemCode(dropMonsters.get(i)
-                        .getItemCode()));
+                return itemMapperMapstruct.map(allItemRepository.findById(dropMonsters.get(i)
+                        .getItemId()).get());
             }
         }
         throw new  RuntimeException("До этого места доходить не должно.");
