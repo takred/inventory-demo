@@ -1,5 +1,8 @@
 package takred.inventorydemo;
 
+import lombok.Data;
+
+@Data
 public class ErrorReport {
     private final int errorCode;
     private final String message;
@@ -9,17 +12,5 @@ public class ErrorReport {
         this.errorCode = errorCode;
         this.message = message;
         this.responseStatus = responseStatus;
-    }
-
-    public int getErrorCode() {
-        return errorCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Integer getResponseStatus() {
-        return responseStatus;
     }
 }

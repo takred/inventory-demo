@@ -51,8 +51,6 @@ public class ItemInInventoryService {
             UUID idItemInCurrentElement = allIdItemInPersonInventory.get(i).getIdItem();
             UUID idObject = allIdItemInPersonInventory.get(i).getId();
             ItemCombination itemCombination = itemMapper.map(allItemRepository.findById(idItemInCurrentElement).get(), idObject);
-//                    new ItemCombination(allItemRepository.findById(idItemInCurrentElement).get(), idObject);
-//            allItemInPersonInventory.add(allItemRepository.findById(idItemInCurrentElement).get());
             allItemInPersonInventory.add(itemCombination);
         }
         return allItemInPersonInventory;
