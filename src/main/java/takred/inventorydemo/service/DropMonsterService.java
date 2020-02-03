@@ -5,6 +5,7 @@ import takred.inventorydemo.DropMonsterListDto;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.DropMonster;
+import takred.inventorydemo.entity.Monster;
 import takred.inventorydemo.mapper.DropMonsterMapper;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
@@ -13,6 +14,7 @@ import takred.inventorydemo.repository.MonsterRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -31,11 +33,11 @@ public class DropMonsterService {
         this.allItemRepository = allItemRepository;
     }
 
-    //спросить у Ильи
+    //спросить у Ильи на счёт findBy с несколькими условиями
     public void addDropMonster(DropMonsterDto dto) {
         DropMonster dropMonster = new DropMonster();
         dropMonster.setMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId());
-        dropMonster.setItemId(monsterRepository.findByMonsterCode(dto.getItemCode()).getId());
+        dropMonster.setItemId(allItemRepository.findByItemCode(dto.getItemCode()).getId());
         dropMonster.setWeight(dto.getWeight());
         dropMonsterRepository.save(dropMonster);
     }
@@ -54,8 +56,8 @@ public class DropMonsterService {
         return false;
     }
 
-    public boolean tableNotEmpty(String monsterCode) {
-        List<DropMonster> items = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterCode));
+    public boolean tableNotEmpty(UUID monsterId) {
+        List<DropMonster> items = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterId));
         if (items.size() > 0) {
             return true;
         }
@@ -63,7 +65,8 @@ public class DropMonsterService {
     }
 
     public ItemDto dropItem(String monsterCode) {
-        List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterCode));
+        Monster monster = new Monster(monsterRepository.findByMonsterCode(monsterCode));
+        List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monster.getId()));
         int weightSum = 0;
         for (int i = 0; i < dropMonsters.size(); i++) {
             weightSum = weightSum + dropMonsters.get(i).getWeight();
