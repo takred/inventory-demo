@@ -65,7 +65,7 @@ public class DropMonsterService {
     }
 
     public ItemDto dropItem(String monsterCode) {
-        Monster monster = new Monster(monsterRepository.findByMonsterCode(monsterCode));
+        Monster monster = monsterRepository.findByMonsterCode(monsterCode);
         List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monster.getId()));
         int weightSum = 0;
         for (int i = 0; i < dropMonsters.size(); i++) {
