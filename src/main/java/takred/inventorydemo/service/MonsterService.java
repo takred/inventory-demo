@@ -95,4 +95,10 @@ public class MonsterService {
         }
         return monsterMapper.map(monster);
     }
+
+    public void createMonstersIfNotExists(Monster monster) {
+        if (!monsterRepository.existsByMonsterCode(monster.getMonsterCode())) {
+            addMonster(monster);
+        }
+    }
 }
