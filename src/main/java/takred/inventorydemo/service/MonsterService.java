@@ -17,7 +17,7 @@ import java.util.UUID;
 @Service
 public class MonsterService {
     private final MonsterRepository monsterRepository;
-//    private final MonsterMapper monsterMapper;
+    //    private final MonsterMapper monsterMapper;
     private final MonsterMapper monsterMapper;
 
     public MonsterService(MonsterRepository monsterRepository,
@@ -51,15 +51,9 @@ public class MonsterService {
         wolf.setMaxDamage(8);
         wolf.setHp(100);
         wolf.setMonsterCode("WOLF");
-        if (!monsterRepository.existsByMonsterCode(bear.getMonsterCode())) {
-            monsterRepository.save(bear);
-        }
-        if (!monsterRepository.existsByMonsterCode(rat.getMonsterCode())) {
-            monsterRepository.save(rat);
-        }
-        if (!monsterRepository.existsByMonsterCode(wolf.getMonsterCode())) {
-            monsterRepository.save(wolf);
-        }
+        createMonstersIfNotExists(bear);
+        createMonstersIfNotExists(rat);
+        createMonstersIfNotExists(wolf);
     }
 
     public String addMonster(Monster monster) {
@@ -68,7 +62,7 @@ public class MonsterService {
             monsterRepository.save(monster);
             return "Монстр успешно добавлен.";
         }
-        throw  new CodedException("Такое имя монстра уже есть!");
+        throw new CodedException("Такое имя монстра уже есть!");
     }
 
     public void addMonsters(MonsterListDto monsterListDto) {
