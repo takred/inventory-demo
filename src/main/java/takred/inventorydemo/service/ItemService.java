@@ -7,6 +7,7 @@ import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.ItemListDto;
 import takred.inventorydemo.entity.Item;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,26 @@ public class ItemService {
     public ItemService(AllItemRepository allItemRepository, ItemMapper itemMapper) {
         this.allItemRepository = allItemRepository;
         this.itemMapper = itemMapper;
+    }
+
+    @PostConstruct
+    public void createItemsIfNotExists() {
+        Item jacket = new Item();
+        jacket.setName("Куртка");
+        jacket.setDamage(1);
+        jacket.setArmor(10);
+        jacket.setItemCode("JACKET");
+        Item boots = new Item();
+        boots.setName("Сапоги");
+        boots.setDamage(1);
+        boots.setArmor(5);
+        boots.setItemCode("BOOTS");
+        if (!allItemRepository.existsByItemCode(jacket.getItemCode())) {
+            allItemRepository.save(jacket);
+        }
+        if (!allItemRepository.existsByItemCode(boots.getItemCode())) {
+            allItemRepository.save(boots);
+        }
     }
 
     public String addItem(Item item) {
