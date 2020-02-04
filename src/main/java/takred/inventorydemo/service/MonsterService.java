@@ -51,13 +51,13 @@ public class MonsterService {
         wolf.setMaxDamage(8);
         wolf.setHp(100);
         wolf.setMonsterCode("WOLF");
-        if (monsterRepository.findByName(bear.getName()) == null) {
+        if (!monsterRepository.existsByMonsterCode(bear.getMonsterCode())) {
             monsterRepository.save(bear);
         }
-        if (monsterRepository.findByName(rat.getName()) == null) {
+        if (!monsterRepository.existsByMonsterCode(rat.getMonsterCode())) {
             monsterRepository.save(rat);
         }
-        if (monsterRepository.findByName(wolf.getName()) == null) {
+        if (!monsterRepository.existsByMonsterCode(wolf.getMonsterCode())) {
             monsterRepository.save(wolf);
         }
     }
