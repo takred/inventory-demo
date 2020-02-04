@@ -13,6 +13,7 @@
             <column name="name" type="varchar(255)"/>
             <column name="damage" type="integer"/>
             <column name="armor" type="int"/>
+            <column name="item_code" type="varchar(255)"/>
         </createTable>
     </changeSet>
 

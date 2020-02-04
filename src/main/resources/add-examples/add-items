@@ -1,0 +1,17 @@
+{
+	"parameters":[
+		{
+        	"name":"Куртка",
+            "damage":1,
+            "armor":10,
+            "itemCode":"JACKET"
+        },
+		{
+            "name":"Сапоги",
+            "damage":1,
+            "armor":5,
+            "itemCode":"BOOTS"
+        }
+		]
+
+}

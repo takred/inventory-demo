@@ -9,4 +9,5 @@ import java.util.UUID;
 public interface DropMonsterRepository extends JpaRepository<DropMonster, UUID> {
 
     List<DropMonster> findByMonsterId(UUID monsterId);
+
 }

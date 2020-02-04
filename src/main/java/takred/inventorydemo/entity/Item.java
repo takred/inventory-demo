@@ -14,6 +14,7 @@ public class Item{
     private String name;
     private Integer damage;
     private Integer armor;
+    private String itemCode;
     @Id
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();

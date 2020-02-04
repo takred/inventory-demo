@@ -5,6 +5,7 @@ import takred.inventorydemo.DropMonsterListDto;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.DropMonster;
+import takred.inventorydemo.entity.Monster;
 import takred.inventorydemo.mapper.DropMonsterMapper;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
@@ -32,10 +33,11 @@ public class DropMonsterService {
         this.allItemRepository = allItemRepository;
     }
 
+    //спросить у Ильи на счёт findBy с несколькими условиями
     public void addDropMonster(DropMonsterDto dto) {
         DropMonster dropMonster = new DropMonster();
-        dropMonster.setMonsterId(dto.getMonsterId());
-        dropMonster.setItemId(dto.getItemId());
+        dropMonster.setMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId());
+        dropMonster.setItemId(allItemRepository.findByItemCode(dto.getItemCode()).getId());
         dropMonster.setWeight(dto.getWeight());
         dropMonsterRepository.save(dropMonster);
     }
@@ -62,8 +64,9 @@ public class DropMonsterService {
         return false;
     }
 
-    public ItemDto dropItem(UUID monsterId) {
-        List<DropMonster> dropMonsters = new ArrayList<>(dropMonsterRepository.findByMonsterId(monsterId));
+    public ItemDto dropItem(String monsterCode) {
+        Monster monster = monsterRepository.findByMonsterCode(monsterCode);
+        List<DropMonster> dropMonsters = dropMonsterRepository.findByMonsterId(monster.getId());
         int weightSum = 0;
         for (int i = 0; i < dropMonsters.size(); i++) {
             weightSum = weightSum + dropMonsters.get(i).getWeight();

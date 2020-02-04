@@ -13,6 +13,7 @@ public class MonsterDto {
     private Integer maxDamage;
     private Integer hp;
     private Integer expForWin;
+    private String monsterCode;
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
 
@@ -22,6 +23,7 @@ public class MonsterDto {
         maxDamage = monster.maxDamage;
         hp = monster.hp;
         expForWin = monster.expForWin;
+        monsterCode = monster.monsterCode;
         id = monster.id;
     }
 
