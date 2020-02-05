@@ -37,8 +37,8 @@ public class ItemInInventoryService {
         this.itemMapper = itemMapper;
     }
 
-    public List<ItemCombination> getPersonItems(String namePerson) {
-        Person person = personRepository.findByName(namePerson).orElse(null);
+    public List<ItemCombination> getPersonItems(UUID personId) {
+        Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
             throw new CodedException("Такого персонажа нет!");
         }
@@ -57,7 +57,7 @@ public class ItemInInventoryService {
     }
 
     public String addItemInInventory(AddInInventoryItemParameters parameters) {
-        Person person = personRepository.findByName(parameters.getNamePerson()).orElse(null);
+        Person person = personRepository.findById(parameters.getPersonId()).orElse(null);
 
         if (person == null) {
             throw new CodedException("Такого персонажа нет!");
@@ -110,8 +110,8 @@ public class ItemInInventoryService {
         return "Успешно надето.";
     }
 
-    public List<ItemDto> getOnlyOnItem(String namePerson) {
-        Person person = personRepository.findByName(namePerson).orElse(null);
+    public List<ItemDto> getOnlyOnItem(UUID personId) {
+        Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
             return new ArrayList<>();
         }

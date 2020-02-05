@@ -2,13 +2,15 @@ package takred.inventorydemo;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class AddInInventoryItemParameters {
-    private String namePerson;
+    private UUID personId;
     private String nameItem;
 
-    public AddInInventoryItemParameters(String namePerson, String nameItem) {
-        this.namePerson = namePerson;
+    public AddInInventoryItemParameters(UUID personId, String nameItem) {
+        this.personId = personId;
         this.nameItem = nameItem;
     }
 

@@ -9,6 +9,7 @@ import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.service.ItemInInventoryService;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/")
@@ -19,9 +20,9 @@ public class ItemInInventoryController {
         this.itemInInventoryService = itemInInventoryService;
     }
 
-    @RequestMapping(value = "get_person_items/{namePerson}")
-    public List<ItemCombination> getPersonItems(@PathVariable("namePerson") String namePerson) {
-        return itemInInventoryService.getPersonItems(namePerson);
+    @RequestMapping(value = "get_person_items/{personId}")
+    public List<ItemCombination> getPersonItems(@PathVariable("personId") UUID personId) {
+        return itemInInventoryService.getPersonItems(personId);
     }
 
     @PostMapping(value = "add_item_in_inventory")
@@ -34,8 +35,8 @@ public class ItemInInventoryController {
         return itemInInventoryService.onItem(parameters);
     }
 
-    @RequestMapping(value = "get_only_on_item/{namePerson}")
-    public List<ItemDto> getOnlyOnItem(@PathVariable("namePerson") String namePerson) {
-        return itemInInventoryService.getOnlyOnItem(namePerson);
+    @RequestMapping(value = "get_only_on_item/{personId}")
+    public List<ItemDto> getOnlyOnItem(@PathVariable("personId") UUID personId) {
+        return itemInInventoryService.getOnlyOnItem(personId);
     }
 }
