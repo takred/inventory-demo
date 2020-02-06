@@ -21,8 +21,7 @@ public class ItemService {
     }
 
     public String addItem(Item item) {
-        Item item1 = allItemRepository.findByItemCode(item.getItemCode());
-        if (item1 == null) {
+        if (allItemRepository.existsByItemCode(item.getItemCode())) {
             allItemRepository.save(item);
             return "Предмет успешно добавлен.";
         }
