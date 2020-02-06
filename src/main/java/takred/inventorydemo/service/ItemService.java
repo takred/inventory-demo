@@ -21,12 +21,11 @@ public class ItemService {
     }
 
     public String addItem(Item item) {
-        Item item1 = allItemRepository.findByName(item.getName());
-        if (item1 == null) {
+        if (allItemRepository.existsByItemCode(item.getItemCode())) {
             allItemRepository.save(item);
             return "Предмет успешно добавлен.";
         }
-        return "Такое название предмета уже есть!";
+        return "Предмет с таким кодом уже есть!";
     }
 
     public void addItems(ItemListDto itemListDto) {

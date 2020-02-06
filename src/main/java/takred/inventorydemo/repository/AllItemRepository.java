@@ -12,4 +12,6 @@ public interface AllItemRepository extends JpaRepository<Item, UUID> {
     Item findByName(String name);
 
     Item findByItemCode(String itemCode);
+
+    boolean existsByItemCode(String itemCode);
 }
