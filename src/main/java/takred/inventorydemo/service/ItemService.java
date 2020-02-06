@@ -33,17 +33,12 @@ public class ItemService {
         boots.setDamage(1);
         boots.setArmor(5);
         boots.setItemCode("BOOTS");
-        if (!allItemRepository.existsByItemCode(jacket.getItemCode())) {
-            allItemRepository.save(jacket);
-        }
-        if (!allItemRepository.existsByItemCode(boots.getItemCode())) {
-            allItemRepository.save(boots);
-        }
+        existsAndSave(jacket);
+        existsAndSave(boots);
     }
 
     public String addItem(Item item) {
-        Item item1 = allItemRepository.findByName(item.getName());
-        if (item1 == null) {
+        if (!allItemRepository.existsByItemCode(item.getItemCode())) {
             allItemRepository.save(item);
             return "Предмет успешно добавлен.";
         }
@@ -58,5 +53,11 @@ public class ItemService {
 
     public List<ItemDto> getAllItems() {
         return new ArrayList<>(itemMapper.map(allItemRepository.findAll()));
+    }
+
+    public void existsAndSave(Item item) {
+        if (!allItemRepository.existsByItemCode(item.getItemCode())) {
+            allItemRepository.save(item);
+        }
     }
 }
