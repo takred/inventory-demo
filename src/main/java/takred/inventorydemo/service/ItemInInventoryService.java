@@ -62,7 +62,7 @@ public class ItemInInventoryService {
         if (person == null) {
             throw new CodedException("Такого персонажа нет!");
         }
-        Item item = allItemRepository.findByName(parameters.getNameItem());
+        Item item = allItemRepository.findByName(parameters.getItemName());
 
         if (item == null) {
             throw new CodedException("Такого предмета нет!");

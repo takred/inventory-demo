@@ -7,11 +7,11 @@ import java.util.UUID;
 @Data
 public class AddInInventoryItemParameters {
     private UUID personId;
-    private String nameItem;
+    private String itemName;
 
-    public AddInInventoryItemParameters(UUID personId, String nameItem) {
+    public AddInInventoryItemParameters(UUID personId, String itemName) {
         this.personId = personId;
-        this.nameItem = nameItem;
+        this.itemName = itemName;
     }
 
     public AddInInventoryItemParameters() {}
