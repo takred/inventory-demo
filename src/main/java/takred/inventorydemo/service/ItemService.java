@@ -33,8 +33,8 @@ public class ItemService {
         boots.setDamage(1);
         boots.setArmor(5);
         boots.setItemCode("BOOTS");
-        existsAndSave(jacket);
-        existsAndSave(boots);
+        saveIfNotExists(jacket);
+        saveIfNotExists(boots);
     }
 
     public String addItem(Item item) {
@@ -55,7 +55,7 @@ public class ItemService {
         return new ArrayList<>(itemMapper.map(allItemRepository.findAll()));
     }
 
-    public void existsAndSave(Item item) {
+    public void saveIfNotExists(Item item) {
         if (!allItemRepository.existsByItemCode(item.getItemCode())) {
             allItemRepository.save(item);
         }
