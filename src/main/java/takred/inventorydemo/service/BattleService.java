@@ -122,7 +122,7 @@ public class BattleService {
             }
             if (dropMonsterService.tableNotEmpty(monster.getId()) && dropMonsterService.dropCheck()) {
                 ItemDto itemDto = dropMonsterService.dropItem(monster.getMonsterCode());
-                AddInInventoryItemParameters parameters = new AddInInventoryItemParameters(person.getName(), itemDto.getName());
+                AddInInventoryItemParameters parameters = new AddInInventoryItemParameters(person.getId(), itemDto.getName());
                 itemInInventoryService.addItemInInventory(parameters);
             }
             if (lvlUp) {
