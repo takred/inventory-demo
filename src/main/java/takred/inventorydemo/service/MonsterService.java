@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
 import takred.inventorydemo.exception.CodedException;
-//import takred.inventorydemo.mapper.MonsterMapper;
 import takred.inventorydemo.mapper.MonsterMapper;
 import takred.inventorydemo.repository.MonsterRepository;
 import takred.inventorydemo.entity.Monster;
@@ -17,14 +16,10 @@ import java.util.UUID;
 @Service
 public class MonsterService {
     private final MonsterRepository monsterRepository;
-//    private final MonsterMapper monsterMapper;
     private final MonsterMapper monsterMapper;
 
-    public MonsterService(MonsterRepository monsterRepository,
-//                          MonsterMapper monsterMapper,
-                          MonsterMapper monsterMapper) {
+    public MonsterService(MonsterRepository monsterRepository, MonsterMapper monsterMapper) {
         this.monsterRepository = monsterRepository;
-//        this.monsterMapper = monsterMapper;
         this.monsterMapper = monsterMapper;
     }
 
@@ -51,24 +46,17 @@ public class MonsterService {
         wolf.setMaxDamage(8);
         wolf.setHp(100);
         wolf.setMonsterCode("WOLF");
-        if (monsterRepository.findByName(bear.getName()) == null) {
-            monsterRepository.save(bear);
-        }
-        if (monsterRepository.findByName(rat.getName()) == null) {
-            monsterRepository.save(rat);
-        }
-        if (monsterRepository.findByName(wolf.getName()) == null) {
-            monsterRepository.save(wolf);
-        }
+        createMonstersIfNotExists(bear);
+        createMonstersIfNotExists(rat);
+        createMonstersIfNotExists(wolf);
     }
 
     public String addMonster(Monster monster) {
-        Monster monster1 = monsterRepository.findByName(monster.getName());
-        if (monster1 == null) {
+        if (!monsterRepository.existsByMonsterCode(monster.getMonsterCode())) {
             monsterRepository.save(monster);
             return "Монстр успешно добавлен.";
         }
-        throw  new CodedException("Такое имя монстра уже есть!");
+        return "Такое имя монстра уже есть!";
     }
 
     public void addMonsters(MonsterListDto monsterListDto) {
@@ -94,5 +82,11 @@ public class MonsterService {
             return null;
         }
         return monsterMapper.map(monster);
+    }
+
+    public void createMonstersIfNotExists(Monster monster) {
+        if (!monsterRepository.existsByMonsterCode(monster.getMonsterCode())) {
+            addMonster(monster);
+        }
     }
 }

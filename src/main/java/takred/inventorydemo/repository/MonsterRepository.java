@@ -12,4 +12,6 @@ public interface MonsterRepository extends JpaRepository<Monster, UUID> {
     Monster findByName(String name);
 
     Monster findByMonsterCode(String monsterCode);
+
+    boolean existsByMonsterCode(String monsterCode);
 }

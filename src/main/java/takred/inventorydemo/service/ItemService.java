@@ -42,7 +42,7 @@ public class ItemService {
             allItemRepository.save(item);
             return "Предмет успешно добавлен.";
         }
-        return "Такое название предмета уже есть!";
+        return "Предмет с таким кодом уже есть!";
     }
 
     public void addItems(ItemListDto itemListDto) {
