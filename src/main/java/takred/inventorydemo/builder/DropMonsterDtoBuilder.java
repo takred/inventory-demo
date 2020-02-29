@@ -3,28 +3,31 @@ package takred.inventorydemo.builder;
 import takred.inventorydemo.dto.DropMonsterDto;
 
 public class DropMonsterDtoBuilder {
-    private DropMonsterDto dropMonsterDto;
+    private String monsterCode;
+    private String itemCode;
+    private Integer weight;
 
-    public DropMonsterDtoBuilder() {
-        dropMonsterDto = new DropMonsterDto();
-    }
+
+//    public DropMonsterDtoBuilder() {
+//        dropMonsterDto = new DropMonsterDto();
+//    }
 
     public DropMonsterDtoBuilder withMonsterCode(String monsterCode) {
-        dropMonsterDto.setMonsterCode(monsterCode);
+        this.monsterCode = monsterCode;
         return this;
     }
 
     public DropMonsterDtoBuilder withItemCode(String itemCode) {
-        dropMonsterDto.setItemCode(itemCode);
+        this.itemCode = itemCode;
         return this;
     }
 
     public DropMonsterDtoBuilder withWeight(Integer weight) {
-        dropMonsterDto.setWeight(weight);
+        this.weight = weight;
         return this;
     }
 
     public DropMonsterDto build() {
-        return dropMonsterDto;
+        return new DropMonsterDto(monsterCode, itemCode, weight);
     }
 }

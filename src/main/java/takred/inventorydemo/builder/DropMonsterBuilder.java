@@ -5,28 +5,30 @@ import takred.inventorydemo.entity.DropMonster;
 import java.util.UUID;
 
 public class DropMonsterBuilder {
-    private DropMonster dropMonster;
+    private UUID monsterId;
+    private UUID itemId;
+    private Integer weight;
 
-    public DropMonsterBuilder() {
-        dropMonster = new DropMonster();
-    }
+//    public DropMonsterBuilder() {
+//        dropMonster = new DropMonster();
+//    }
 
     public DropMonsterBuilder withMonsterId(UUID monsterId) {
-        dropMonster.setMonsterId(monsterId);
+        this.monsterId = monsterId;
         return this;
     }
 
     public DropMonsterBuilder withItemId(UUID itemId) {
-        dropMonster.setItemId(itemId);
+        this.itemId = itemId;
         return this;
     }
 
     public DropMonsterBuilder withWeight(Integer weight) {
-        dropMonster.setWeight(weight);
+        this.weight = weight;
         return this;
     }
 
     public DropMonster build() {
-        return dropMonster;
+        return new DropMonster(monsterId, itemId, weight);
     }
 }
