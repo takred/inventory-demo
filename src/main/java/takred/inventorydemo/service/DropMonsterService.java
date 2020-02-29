@@ -2,6 +2,7 @@ package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.DropMonsterListDto;
+import takred.inventorydemo.builder.DropMonsterBuilder;
 import takred.inventorydemo.dto.DropMonsterDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.DropMonster;
@@ -33,12 +34,12 @@ public class DropMonsterService {
         this.allItemRepository = allItemRepository;
     }
 
-    //спросить у Ильи на счёт findBy с несколькими условиями
     public void addDropMonster(DropMonsterDto dto) {
-        DropMonster dropMonster = new DropMonster();
-        dropMonster.setMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId());
-        dropMonster.setItemId(allItemRepository.findByItemCode(dto.getItemCode()).getId());
-        dropMonster.setWeight(dto.getWeight());
+        DropMonster dropMonster = new DropMonsterBuilder()
+                .withMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId())
+                .withItemId(allItemRepository.findByItemCode(dto.getItemCode()).getId())
+                .withWeight(dto.getWeight())
+                .build();
         dropMonsterRepository.save(dropMonster);
     }
 
