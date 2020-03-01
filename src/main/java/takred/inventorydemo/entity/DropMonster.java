@@ -17,4 +17,10 @@ public class DropMonster {
     @Id
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
+
+    public DropMonster(UUID monsterId, UUID itemId, Integer weight) {
+        this.monsterId = monsterId;
+        this.itemId = itemId;
+        this.weight = weight;
+    }
 }
