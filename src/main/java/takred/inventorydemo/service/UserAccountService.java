@@ -8,6 +8,7 @@ import takred.inventorydemo.entity.DeathAndResurrectionLog;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.exception.CodedException;
+import takred.inventorydemo.mapper.UserAccountMapper;
 import takred.inventorydemo.repository.DeathAndResurrectionLogRepository;
 import takred.inventorydemo.repository.PersonRepository;
 import takred.inventorydemo.repository.UserAccountRepository;
@@ -19,12 +20,14 @@ public class UserAccountService {
     private final UserAccountRepository userAccountRepository;
     private final PersonRepository personRepository;
     private final DeathAndResurrectionLogRepository deathAndResurrectionLogRepository;
+    private final UserAccountMapper userAccountMapper;
 
-    public UserAccountService(UserAccountRepository userAccountRepository, PersonRepository personRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository
-    ) {
+    public UserAccountService(UserAccountRepository userAccountRepository, PersonRepository personRepository, DeathAndResurrectionLogRepository deathAndResurrectionLogRepository,
+                              UserAccountMapper userAccountMapper) {
         this.userAccountRepository = userAccountRepository;
         this.personRepository = personRepository;
         this.deathAndResurrectionLogRepository = deathAndResurrectionLogRepository;
+        this.userAccountMapper = userAccountMapper;
     }
 
 
@@ -35,11 +38,7 @@ public class UserAccountService {
             userAccount.setLogin(registerUserDto.getLogin());
             userAccount.setGold(1000);
             userAccountRepository.save(userAccount);
-            userAccountDto = new UserAccountDtoBuilder()
-                    .withLogin(userAccount.getLogin())
-                    .withGold(userAccount.getGold())
-                    .withId(userAccount.getId())
-                    .build();
+            userAccountDto = userAccountMapper.map(userAccount);
             return userAccountDto;
         }
         throw new CodedException("Пользователь с таким логином уже есть!");
