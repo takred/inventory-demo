@@ -6,7 +6,10 @@ import takred.inventorydemo.AddInInventoryItemParameters;
 import takred.inventorydemo.builder.BattleDtoBuilder;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.dto.ItemDto;
-import takred.inventorydemo.entity.*;
+import takred.inventorydemo.entity.Battle;
+import takred.inventorydemo.entity.BattleLog;
+import takred.inventorydemo.entity.Monster;
+import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.exception.CodedException;
 import takred.inventorydemo.repository.*;
 

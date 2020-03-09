@@ -3,8 +3,8 @@ package takred.inventorydemo.web;
 import org.springframework.web.bind.annotation.*;
 import takred.inventorydemo.MonsterListDto;
 import takred.inventorydemo.dto.MonsterDto;
-import takred.inventorydemo.service.MonsterService;
 import takred.inventorydemo.entity.Monster;
+import takred.inventorydemo.service.MonsterService;
 
 import java.util.List;
 import java.util.UUID;

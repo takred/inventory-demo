@@ -3,8 +3,6 @@ package takred.inventorydemo.dto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.List;
 import java.util.UUID;
 

@@ -9,7 +9,6 @@ import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.exception.CodedException;
-//import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.repository.ItemInInventoryRepository;
@@ -18,6 +17,8 @@ import takred.inventorydemo.repository.PersonRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+//import takred.inventorydemo.mapper.ItemMapper;
 
 @Service
 public class ItemInInventoryService {

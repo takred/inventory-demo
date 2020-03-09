@@ -1,6 +1,5 @@
 package takred.inventorydemo.mapper;
 
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 import takred.inventorydemo.builder.PersonDtoBuilder;
 import takred.inventorydemo.dto.PersonDto;

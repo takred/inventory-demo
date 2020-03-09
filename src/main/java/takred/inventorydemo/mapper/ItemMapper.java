@@ -1,7 +1,5 @@
 package takred.inventorydemo.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.springframework.stereotype.Component;
 import takred.inventorydemo.ItemCombination;
 import takred.inventorydemo.builder.ItemBuilder;

@@ -1,7 +1,6 @@
 package takred.inventorydemo.builder;
 
 import takred.inventorydemo.dto.MonsterDto;
-import takred.inventorydemo.entity.Monster;
 
 import java.util.UUID;
 
