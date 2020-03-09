@@ -19,10 +19,6 @@ public class DropMonsterMapper {
         this.monsterRepository = monsterRepository;
     }
 
-//    DropMonster map(DropMonsterDto dto);
-
-//    DropMonsterDto map(DropMonster entity);
-
     public DropMonster map(DropMonsterDto dto) {
         return new DropMonsterBuilder()
                 .withMonsterId(monsterRepository.findByMonsterCode(dto.getMonsterCode()).getId())

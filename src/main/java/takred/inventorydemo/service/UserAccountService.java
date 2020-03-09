@@ -29,9 +29,7 @@ public class UserAccountService {
 
 
     public UserAccountDto registerNewUserAccount(RegisterUserDto registerUserDto){
-        UserAccountDto userAccountDto = new UserAccountDtoBuilder()
-                .build();
-//        userAccountDto.setId(null);
+        UserAccountDto userAccountDto;
         if (userAccountRepository.findByLogin(registerUserDto.getLogin()).orElse(null) == null) {
             UserAccount userAccount = new UserAccount();
             userAccount.setLogin(registerUserDto.getLogin());

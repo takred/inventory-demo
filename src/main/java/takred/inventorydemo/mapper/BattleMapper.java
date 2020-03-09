@@ -22,7 +22,6 @@ public class BattleMapper {
         this.battleLogRepository = battleLogRepository;
     }
 
-//    BattleDto map(Battle entity);
 
     public BattleDto map(Battle entity) {
         return new BattleDtoBuilder()
@@ -31,7 +30,6 @@ public class BattleMapper {
                 .withMonsterName(monsterRepository.findById(entity.getMonsterId()).get().getName())
                 .withBattleNumber(entity.getBattleNumber())
                 .withWinner(entity.getWinner())
-//                .withLvlUp(false)
                 .withBattleLog(battleLog(battleLogRepository.findByBattleId(entity.getId())))
                 .withId(entity.getId())
                 .build();

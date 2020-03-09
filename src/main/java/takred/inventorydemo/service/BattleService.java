@@ -37,7 +37,6 @@ public class BattleService {
     }
 
     public BattleDto battle(UUID personId, UUID monsterId) {
-//        BattleDto battleDto = new BattleDto();
         Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
             throw new CodedException("Такого персонажа нет!");
@@ -68,7 +67,6 @@ public class BattleService {
         battleRepository.save(battleNew);
         person.setBattleProgress(true);
         personRepository.save(person);
-//        battleDto.setId(battleNew.getId());
         return new BattleDtoBuilder()
                 .withId(battleNew.getId())
                 .build();
@@ -183,20 +181,6 @@ public class BattleService {
         battleLogRepository.save(battleLog);
     }
 
-//    private BattleDto battleDto(UUID id, UUID peronId, UUID monsterId, String monsterName,
-//                                Integer battleNumber, UUID winner, List<String> battleLog, boolean lvlUp) {
-//        BattleDto battleDto = new BattleDto();
-//        battleDto.setId(id);
-//        battleDto.setPersonId(peronId);
-//        battleDto.setMonsterId(monsterId);
-//        battleDto.setMonsterName(monsterName);
-//        battleDto.setBattleNumber(battleNumber);
-//        battleDto.setWinner(winner);
-//        battleDto.setBattleLog(battleLog);
-//        battleDto.setLvlUp(lvlUp);
-//        return battleDto;
-//    }
-
     private ActResultDto actResultDto(Integer hpLostMonster, Integer hpLostPerson, UUID winner, boolean lvlUp, String message) {
         ActResultDto actResultDto = new ActResultDto();
         actResultDto.setHpLostMonster(hpLostMonster);
@@ -232,11 +216,4 @@ public class BattleService {
         }
         return minDamage;
     }
-
-//    private void deathLog(UUID personId, String message) {
-//        DeathAndResurrectionLog deathAndResurrectionLog = new DeathAndResurrectionLog();
-//        deathAndResurrectionLog.setMessage(message);
-//        deathAndResurrectionLog.setPersonId(personId);
-//        deathAndResurrectionLogRepository.save(deathAndResurrectionLog);
-//    }
 }

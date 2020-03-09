@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//@Mapper(componentModel = "spring")
 @Component
 public class ItemMapper {
     public ItemDto map(Item entity){
@@ -44,11 +43,6 @@ public class ItemMapper {
         return list;
     }
 
-//    @Mapping(source = "item.name", target = "name")
-//    @Mapping(source = "item.damage", target = "damage")
-//    @Mapping(source = "item.armor", target = "armor")
-//    @Mapping(source = "item.id", target = "itemId")
-//    @Mapping(source = "itemInInventoryId", target = "id")
     public ItemCombination map(Item item, UUID itemInInventoryId){
         return new ItemCombination(item, itemInInventoryId);
     }

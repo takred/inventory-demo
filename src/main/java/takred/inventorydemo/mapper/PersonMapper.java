@@ -19,7 +19,6 @@ public class PersonMapper {
                 .withLvl(entity.getLvl())
                 .withExpForNextLvl(entity.getExpForNextLvl())
                 .withExp(entity.getExp())
-//                .withError()
                 .withId(entity.getId())
                 .withUserId(entity.getUserId())
                 .build();

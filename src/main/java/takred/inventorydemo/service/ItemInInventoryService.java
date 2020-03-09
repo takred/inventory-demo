@@ -24,16 +24,13 @@ public class ItemInInventoryService {
     private final ItemInInventoryRepository itemInInventoryRepository;
     private final AllItemRepository allItemRepository;
     private final PersonRepository personRepository;
-//    private final ItemMapper itemMapper;
     private final ItemMapper itemMapper;
 
-    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository,
-//                                  ItemMapper itemMapper,
-                                  ItemMapper itemMapper) {
+    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository
+            , AllItemRepository allItemRepository, PersonRepository personRepository, ItemMapper itemMapper) {
         this.itemInInventoryRepository = itemInInventoryRepository;
         this.allItemRepository = allItemRepository;
         this.personRepository = personRepository;
-//        this.itemMapper = itemMapper;
         this.itemMapper = itemMapper;
     }
 
