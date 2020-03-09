@@ -8,18 +8,18 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PersonDto {
-    private String name;
-    private Integer minDamage;
-    private Integer maxDamage;
-    private Integer hp;
-    private Integer maxHp;
-    private Integer lvl;
-    private Integer expForNextLvl;
-    private Integer exp;
-    private String error;
+    private final String name;
+    private final Integer minDamage;
+    private final Integer maxDamage;
+    private final Integer hp;
+    private final Integer maxHp;
+    private final Integer lvl;
+    private final Integer expForNextLvl;
+    private final Integer exp;
+//    private final String error;
     @EqualsAndHashCode.Include
-    private UUID id = UUID.randomUUID();
-    private UUID userId;
+    private final UUID id;
+    private final UUID userId;
 
     public PersonDto(PersonDto person) {
         name = person.name;
@@ -30,10 +30,24 @@ public class PersonDto {
         lvl = person.lvl;
         expForNextLvl = person.expForNextLvl;
         exp = person.exp;
-        error = null;
+//        error = null;
         id = person.id;
         userId = person.userId;
     }
-    public PersonDto() {
+    public PersonDto(String name, Integer minDamage, Integer maxDamage, Integer hp, Integer maxHp
+    , Integer lvl, Integer expForNextLvl, Integer exp,
+//                     String error,
+                     UUID id, UUID userId) {
+        this.name = name;
+        this.minDamage = minDamage;
+        this.maxDamage = maxDamage;
+        this.hp = hp;
+        this.maxHp = maxHp;
+        this.lvl = lvl;
+        this.expForNextLvl = expForNextLvl;
+        this.exp = exp;
+//        this.error = error;
+        this.id = id;
+        this.userId = userId;
     }
 }

@@ -3,6 +3,7 @@ package takred.inventorydemo.service;
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.ActResultDto;
 import takred.inventorydemo.AddInInventoryItemParameters;
+import takred.inventorydemo.builder.BattleDtoBuilder;
 import takred.inventorydemo.dto.BattleDto;
 import takred.inventorydemo.dto.ItemDto;
 import takred.inventorydemo.entity.*;
@@ -36,7 +37,7 @@ public class BattleService {
     }
 
     public BattleDto battle(UUID personId, UUID monsterId) {
-        BattleDto battleDto = new BattleDto();
+//        BattleDto battleDto = new BattleDto();
         Person person = personRepository.findById(personId).orElse(null);
         if (person == null) {
             throw new CodedException("Такого персонажа нет!");
@@ -67,8 +68,10 @@ public class BattleService {
         battleRepository.save(battleNew);
         person.setBattleProgress(true);
         personRepository.save(person);
-        battleDto.setId(battleNew.getId());
-        return battleDto;
+//        battleDto.setId(battleNew.getId());
+        return new BattleDtoBuilder()
+                .withId(battleNew.getId())
+                .build();
     }
 
     public ActResultDto act(UUID battleId) {
@@ -180,19 +183,19 @@ public class BattleService {
         battleLogRepository.save(battleLog);
     }
 
-    private BattleDto battleDto(UUID id, UUID peronId, UUID monsterId, String monsterName,
-                                Integer battleNumber, UUID winner, List<String> battleLog, boolean lvlUp) {
-        BattleDto battleDto = new BattleDto();
-        battleDto.setId(id);
-        battleDto.setPersonId(peronId);
-        battleDto.setMonsterId(monsterId);
-        battleDto.setMonsterName(monsterName);
-        battleDto.setBattleNumber(battleNumber);
-        battleDto.setWinner(winner);
-        battleDto.setBattleLog(battleLog);
-        battleDto.setLvlUp(lvlUp);
-        return battleDto;
-    }
+//    private BattleDto battleDto(UUID id, UUID peronId, UUID monsterId, String monsterName,
+//                                Integer battleNumber, UUID winner, List<String> battleLog, boolean lvlUp) {
+//        BattleDto battleDto = new BattleDto();
+//        battleDto.setId(id);
+//        battleDto.setPersonId(peronId);
+//        battleDto.setMonsterId(monsterId);
+//        battleDto.setMonsterName(monsterName);
+//        battleDto.setBattleNumber(battleNumber);
+//        battleDto.setWinner(winner);
+//        battleDto.setBattleLog(battleLog);
+//        battleDto.setLvlUp(lvlUp);
+//        return battleDto;
+//    }
 
     private ActResultDto actResultDto(Integer hpLostMonster, Integer hpLostPerson, UUID winner, boolean lvlUp, String message) {
         ActResultDto actResultDto = new ActResultDto();

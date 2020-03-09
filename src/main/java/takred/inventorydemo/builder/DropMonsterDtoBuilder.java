@@ -2,10 +2,13 @@ package takred.inventorydemo.builder;
 
 import takred.inventorydemo.dto.DropMonsterDto;
 
+import java.util.UUID;
+
 public class DropMonsterDtoBuilder {
     private String monsterCode;
     private String itemCode;
     private Integer weight;
+    private UUID id;
 
 
 //    public DropMonsterDtoBuilder() {
@@ -27,7 +30,12 @@ public class DropMonsterDtoBuilder {
         return this;
     }
 
+    public DropMonsterDtoBuilder withId(UUID id) {
+        this.id = id;
+        return this;
+    }
+
     public DropMonsterDto build() {
-        return new DropMonsterDto(monsterCode, itemCode, weight);
+        return new DropMonsterDto(monsterCode, itemCode, weight, id);
     }
 }

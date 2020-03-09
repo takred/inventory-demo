@@ -18,4 +18,14 @@ public class Item{
     @Id
     @EqualsAndHashCode.Include
     private UUID id = UUID.randomUUID();
+
+    public Item() {}
+
+    public Item(String name, Integer damage, Integer armor, String itemCode, UUID id) {
+        this.name = name;
+        this.damage = damage;
+        this.armor = armor;
+        this.itemCode = itemCode;
+        this.id = id;
+    }
 }

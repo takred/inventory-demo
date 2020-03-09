@@ -10,13 +10,18 @@ import java.util.UUID;
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BattleLogDto {
-    private UUID personId;
-    private UUID battleId;
-    private String message;
-    private Integer turn;
+    private final UUID personId;
+    private final UUID battleId;
+    private final String message;
+    private final Integer turn;
     @EqualsAndHashCode.Include
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
 
-    public BattleLogDto() {
+    public BattleLogDto(UUID personId, UUID battleId, String message, Integer turn, UUID id) {
+        this.personId = personId;
+        this.battleId = battleId;
+        this.message = message;
+        this.turn = turn;
+        this.id = id;
     }
 }

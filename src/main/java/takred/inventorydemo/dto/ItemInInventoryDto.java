@@ -11,9 +11,16 @@ import java.util.UUID;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ItemInInventoryDto {
     @EqualsAndHashCode.Include
-    private UUID id = UUID.randomUUID();
-    private UUID idItem;
-    private UUID idPerson;
-    private boolean itemOn = false;
+    private final UUID id;
+    private final UUID itemId;
+    private final UUID personId;
+    private final boolean itemOn;
+//    private final boolean itemOn = false;
 
+    public ItemInInventoryDto(UUID id, UUID itemId, UUID personId, boolean itemOn) {
+        this.id = id;
+        this.itemId = itemId;
+        this.personId = personId;
+        this.itemOn = itemOn;
+    }
 }

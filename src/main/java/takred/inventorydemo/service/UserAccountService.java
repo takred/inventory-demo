@@ -2,6 +2,7 @@ package takred.inventorydemo.service;
 
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.RegisterUserDto;
+import takred.inventorydemo.builder.UserAccountDtoBuilder;
 import takred.inventorydemo.dto.UserAccountDto;
 import takred.inventorydemo.entity.DeathAndResurrectionLog;
 import takred.inventorydemo.entity.Person;
@@ -28,16 +29,19 @@ public class UserAccountService {
 
 
     public UserAccountDto registerNewUserAccount(RegisterUserDto registerUserDto){
-        UserAccountDto userAccountDto = new UserAccountDto();
-        userAccountDto.setId(null);
+        UserAccountDto userAccountDto = new UserAccountDtoBuilder()
+                .build();
+//        userAccountDto.setId(null);
         if (userAccountRepository.findByLogin(registerUserDto.getLogin()).orElse(null) == null) {
             UserAccount userAccount = new UserAccount();
             userAccount.setLogin(registerUserDto.getLogin());
             userAccount.setGold(1000);
             userAccountRepository.save(userAccount);
-            userAccountDto.setLogin(userAccount.getLogin());
-            userAccountDto.setGold(userAccount.getGold());
-            userAccountDto.setId(userAccount.getId());
+            userAccountDto = new UserAccountDtoBuilder()
+                    .withLogin(userAccount.getLogin())
+                    .withGold(userAccount.getGold())
+                    .withId(userAccount.getId())
+                    .build();
             return userAccountDto;
         }
         throw new CodedException("Пользователь с таким логином уже есть!");
