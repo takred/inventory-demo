@@ -13,7 +13,6 @@ public class PersonDtoBuilder {
     private Integer lvl;
     private Integer expForNextLvl;
     private Integer exp;
-//    private String error;
     private UUID id;
     private UUID userId;
 
@@ -56,11 +55,6 @@ public class PersonDtoBuilder {
         this.exp = exp;
         return this;
     }
-
-//    public PersonDtoBuilder withError(String error) {
-//        this.error = error;
-//        return this;
-//    }
 
     public PersonDtoBuilder withId(UUID id) {
         this.id = id;

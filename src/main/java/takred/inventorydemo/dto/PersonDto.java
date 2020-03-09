@@ -16,7 +16,6 @@ public class PersonDto {
     private final Integer lvl;
     private final Integer expForNextLvl;
     private final Integer exp;
-//    private final String error;
     @EqualsAndHashCode.Include
     private final UUID id;
     private final UUID userId;
@@ -30,14 +29,11 @@ public class PersonDto {
         lvl = person.lvl;
         expForNextLvl = person.expForNextLvl;
         exp = person.exp;
-//        error = null;
         id = person.id;
         userId = person.userId;
     }
     public PersonDto(String name, Integer minDamage, Integer maxDamage, Integer hp, Integer maxHp
-    , Integer lvl, Integer expForNextLvl, Integer exp,
-//                     String error,
-                     UUID id, UUID userId) {
+    , Integer lvl, Integer expForNextLvl, Integer exp, UUID id, UUID userId) {
         this.name = name;
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
@@ -46,7 +42,6 @@ public class PersonDto {
         this.lvl = lvl;
         this.expForNextLvl = expForNextLvl;
         this.exp = exp;
-//        this.error = error;
         this.id = id;
         this.userId = userId;
     }

@@ -11,10 +11,6 @@ public class DropMonsterDtoBuilder {
     private UUID id;
 
 
-//    public DropMonsterDtoBuilder() {
-//        dropMonsterDto = new DropMonsterDto();
-//    }
-
     public DropMonsterDtoBuilder withMonsterCode(String monsterCode) {
         this.monsterCode = monsterCode;
         return this;

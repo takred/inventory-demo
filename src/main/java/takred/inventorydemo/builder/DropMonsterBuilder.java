@@ -9,10 +9,6 @@ public class DropMonsterBuilder {
     private UUID itemId;
     private Integer weight;
 
-//    public DropMonsterBuilder() {
-//        dropMonster = new DropMonster();
-//    }
-
     public DropMonsterBuilder withMonsterId(UUID monsterId) {
         this.monsterId = monsterId;
         return this;

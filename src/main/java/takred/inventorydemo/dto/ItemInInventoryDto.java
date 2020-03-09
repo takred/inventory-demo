@@ -15,7 +15,6 @@ public class ItemInInventoryDto {
     private final UUID itemId;
     private final UUID personId;
     private final boolean itemOn;
-//    private final boolean itemOn = false;
 
     public ItemInInventoryDto(UUID id, UUID itemId, UUID personId, boolean itemOn) {
         this.id = id;
