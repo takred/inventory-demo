@@ -2,11 +2,12 @@ package takred.inventorydemo.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
 import java.util.List;
 import java.util.UUID;
 
-@Data
+@Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BattleDto {
     private final UUID personId;
