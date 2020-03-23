@@ -9,7 +9,6 @@ import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.entity.ItemInInventory;
 import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.exception.CodedException;
-//import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.mapper.ItemMapper;
 import takred.inventorydemo.repository.AllItemRepository;
 import takred.inventorydemo.repository.ItemInInventoryRepository;
@@ -19,21 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+//import takred.inventorydemo.mapper.ItemMapper;
+
 @Service
 public class ItemInInventoryService {
     private final ItemInInventoryRepository itemInInventoryRepository;
     private final AllItemRepository allItemRepository;
     private final PersonRepository personRepository;
-//    private final ItemMapper itemMapper;
     private final ItemMapper itemMapper;
 
-    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository, AllItemRepository allItemRepository, PersonRepository personRepository,
-//                                  ItemMapper itemMapper,
-                                  ItemMapper itemMapper) {
+    public ItemInInventoryService(ItemInInventoryRepository itemInInventoryRepository
+            , AllItemRepository allItemRepository, PersonRepository personRepository, ItemMapper itemMapper) {
         this.itemInInventoryRepository = itemInInventoryRepository;
         this.allItemRepository = allItemRepository;
         this.personRepository = personRepository;
-//        this.itemMapper = itemMapper;
         this.itemMapper = itemMapper;
     }
 

@@ -3,7 +3,6 @@ package takred.inventorydemo.web;
 import org.springframework.web.bind.annotation.*;
 import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
-import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.service.PersonService;
 
 import java.util.List;

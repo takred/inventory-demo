@@ -3,11 +3,11 @@ package takred.inventorydemo.service;
 import org.springframework.stereotype.Service;
 import takred.inventorydemo.CreatePersonDto;
 import takred.inventorydemo.dto.PersonDto;
+import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.entity.UserAccount;
 import takred.inventorydemo.exception.CodedException;
 import takred.inventorydemo.mapper.PersonMapper;
 import takred.inventorydemo.repository.PersonRepository;
-import takred.inventorydemo.entity.Person;
 import takred.inventorydemo.repository.UserAccountRepository;
 
 import java.util.ArrayList;

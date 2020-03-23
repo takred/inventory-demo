@@ -2,21 +2,25 @@ package takred.inventorydemo.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Value;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.UUID;
 
-@Data
+@Value
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class BattleLogDto {
-    private UUID personId;
-    private UUID battleId;
-    private String message;
-    private Integer turn;
+    private final UUID personId;
+    private final UUID battleId;
+    private final String message;
+    private final Integer turn;
     @EqualsAndHashCode.Include
-    private UUID id = UUID.randomUUID();
+    private final UUID id;
 
-    public BattleLogDto() {
+    public BattleLogDto(UUID personId, UUID battleId, String message, Integer turn, UUID id) {
+        this.personId = personId;
+        this.battleId = battleId;
+        this.message = message;
+        this.turn = turn;
+        this.id = id;
     }
 }

@@ -5,7 +5,6 @@ import takred.inventorydemo.AddInInventoryItemParameters;
 import takred.inventorydemo.ItemCombination;
 import takred.inventorydemo.ItemOnParameters;
 import takred.inventorydemo.dto.ItemDto;
-import takred.inventorydemo.entity.Item;
 import takred.inventorydemo.service.ItemInInventoryService;
 
 import java.util.List;
